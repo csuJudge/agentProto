@@ -1,0 +1,275 @@
+syntax = "proto3";
+option go_package = "github.com/csuJudge/agentProto/agent";
+
+package oj.agent;
+
+service AgentServer {
+  // ---------- P0：MVP ----------
+  // SocraticAsk 苏格拉底式问答
+  rpc SocraticAsk(SocraticAskReq) returns (SocraticAskRsp) {}
+  // QuerySocraticSession 查询当前进行中的会话状态
+  rpc QuerySocraticSession(QuerySocraticSessionReq) returns (QuerySocraticSessionRsp) {}
+  // QuerySocraticHistory 查询苏格拉底对话历史
+  rpc QuerySocraticHistory(QuerySocraticHistoryReq) returns (QuerySocraticHistoryRsp) {}
+  // EndSession 结束当前会话
+  rpc EndSession(EndSessionReq) returns (EndSessionRsp) {}
+
+  // ---------- P1：流式体验 ----------
+  // SocraticAskStream 流式问答；请求复用 SocraticAskReq
+  rpc SocraticAskStream(SocraticAskReq) returns (stream SocraticAskChunk) {}
+
+  // ---------- P2：学生画像与教师端 ----------
+  // QueryKnowledgeGapList 查询学生自己的知识薄弱点
+  rpc QueryKnowledgeGapList(QueryKnowledgeGapListReq) returns (QueryKnowledgeGapListRsp) {}
+  // QueryTeacherDashboard 查询教师端班级统计概览
+  rpc QueryTeacherDashboard(QueryTeacherDashboardReq) returns (QueryTeacherDashboardRsp) {}
+  // QueryTeacherSessionList 查询教师端会话列表
+  rpc QueryTeacherSessionList(QueryTeacherSessionListReq) returns (QueryTeacherSessionListRsp) {}
+  // QueryTeacherSessionDetail 查询教师端单个会话明细
+  rpc QueryTeacherSessionDetail(QueryTeacherSessionDetailReq) returns (QueryTeacherSessionDetailRsp) {}
+  // QueryTeacherKnowledgeGapList 查询教师端知识薄弱点列表
+  rpc QueryTeacherKnowledgeGapList(QueryTeacherKnowledgeGapListReq) returns (QueryTeacherKnowledgeGapListRsp) {}
+}
+
+message SocraticAskReq {
+  int32 problemID = 1;    // 题目编号
+  int32 userID = 2;       // 学生编号
+  string question = 3;    // 学生的提问或对上一轮引导的回答
+  int32 solutionID = 4;   // 提交编号；0 表示由服务端选择该用户在这道题上的最新提交
+  string sessionID = 5;   // 会话编号；为空表示继续 userID + problemID 对应的当前会话
+}
+
+message SocraticAskRsp {
+  string message = 1;                 // 返回信息
+  int32 code = 2;                     // 返回码
+  SocraticSession session = 3;        // 会话状态
+  SocraticMessage studentMessage = 4; // 本轮学生消息
+  SocraticMessage agentMessage = 5;   // 本轮 Agent 回复，回复正文在 content 中
+  int32 hintLevel = 6;                // 当前提示等级，1=间接反问 2=具体提示 3=概念解释
+  string strategy = 7;                // 本轮使用的策略
+  repeated KnowledgePoint knowledgePoints = 8; // 本轮涉及的知识点
+  int32 guardrailPass = 9;            // 安全审查结果，0=失败 1=通过 2=已重写
+}
+
+message SocraticAskChunk {
+  string message = 1;   // 返回信息
+  int32 code = 2;       // 返回码
+  int32 chunkType = 3;  // 0=增量内容 1=最终结果
+  string delta = 4;     // 增量文本，chunkType=0 时使用
+  bool finished = 5;    // 是否结束
+  string sessionID = 6; // 会话编号
+  int32 turn = 7;       // 当前对话轮数
+  string strategy = 8;  // Agent 最终使用的策略
+  int32 hintLevel = 9;  // Agent 最终使用的提示等级
+  repeated KnowledgePoint knowledgePoints = 10; // 本轮涉及的知识点
+  SocraticMessage agentMessage = 11; // 完整 Agent 回复，chunkType=1 时填充
+  int32 guardrailPass = 12;          // 安全审查结果，0=失败 1=通过 2=已重写
+}
+
+message QuerySocraticSessionReq {
+  int32 userID = 1;     // 学生编号
+  int32 problemID = 2;  // 题目编号
+  string sessionID = 3; // 会话编号；为空表示查询当前进行中的会话
+}
+
+message QuerySocraticSessionRsp {
+  string message = 1; // 返回信息
+  int32 code = 2;     // 返回码
+  SocraticSession session = 3; // 会话状态
+}
+
+message QuerySocraticHistoryReq {
+  int32 userID = 1;     // 学生编号
+  int32 problemID = 2;  // 题目编号
+  string sessionID = 3; // 会话编号；为空表示查询该用户在这道题上的全部会话
+  int32 page = 4;       // 页码，从 1 开始
+  int32 limit = 5;      // 每页条数
+  repeated int32 roles = 6; // 消息角色过滤，0=学生 1=Agent；空表示全部
+  string startTime = 7; // 开始时间，格式 yyyy-MM-dd HH:mm:ss；空表示不限制
+  string endTime = 8;   // 结束时间，格式 yyyy-MM-dd HH:mm:ss；空表示不限制
+  bool includeDisabled = 9; // 是否包含已删除消息
+}
+
+message QuerySocraticHistoryRsp {
+  string message = 1; // 返回信息
+  int32 code = 2;     // 返回码
+  repeated SocraticMessage messages = 3; // 消息列表
+  int32 total = 4;    // 消息总数
+  bool hasMore = 5;   // 是否还有下一页
+  SocraticSession session = 6; // 指定会话的状态；跨会话查询时可为空
+}
+
+message EndSessionReq {
+  int32 userID = 1;     // 学生编号
+  int32 problemID = 2;  // 题目编号
+  string sessionID = 3; // 会话编号；为空表示结束当前进行中的会话
+  string reason = 4;    // 结束原因
+}
+
+message EndSessionRsp {
+  string message = 1; // 返回信息
+  int32 code = 2;     // 返回码
+  SocraticSession session = 3; // 结束后的会话状态
+}
+
+message SocraticSession {
+  int32 id = 1;             // 会话表主键
+  string sessionID = 2;     // 会话唯一标识
+  int32 userID = 3;         // 学生编号
+  int32 problemID = 4;      // 题目编号
+  string latestStrategy = 5; // 最近一次使用的策略
+  repeated string knowledgeGaps = 6; // 已识别的薄弱知识点名称
+  int32 hintLevel = 7;      // 当前提示等级
+  int32 turnCount = 8;      // 当前对话轮数
+  int32 enable = 9;         // 1=进行中 0=已结束
+  string createdTime = 10;  // 创建时间
+  string updatedTime = 11;  // 最后更新时间
+}
+
+message SocraticMessage {
+  int32 id = 1;         // 消息表主键
+  string sessionID = 2; // 会话唯一标识
+  int32 userID = 3;     // 学生编号
+  int32 problemID = 4;  // 题目编号
+  int32 turn = 5;       // 第几轮，从 1 开始
+  int32 role = 6;       // 0=学生提问 1=Agent 回复
+  string content = 7;   // 消息内容
+  string strategy = 8;  // 策略，仅 Agent 回复有值
+  int32 hintLevel = 9;  // Agent 回复使用的提示等级
+  int32 guardrailPass = 10; // 安全审查结果，0=失败 1=通过 2=已重写
+  int32 tokenCount = 11;    // 消息 token 用量
+  int32 enable = 12;        // 1=有效 0=已删除
+  string createdTime = 13;  // 创建时间
+  string updatedTime = 14;  // 最后更新时间
+  repeated KnowledgePoint knowledgePoints = 15; // 本轮涉及的知识点
+}
+
+message KnowledgePoint {
+  int32 knowledgeID = 1; // 知识点编号
+  string name = 2;       // 知识点名称
+}
+
+message SocraticKnowledgeGap {
+  int32 id = 1;             // 薄弱点表主键
+  int32 userID = 2;         // 学生编号
+  int32 knowledgeID = 3;    // 知识点编号；0 表示尚未关联
+  string knowledgeName = 4; // 知识点名称
+  int32 problemID = 5;      // 首次识别到该薄弱点的题目编号
+  int32 frequency = 6;      // 累计出现次数
+  int32 enable = 7;         // 1=有效 0=已失效
+  string createdTime = 8;   // 首次识别时间
+  string updatedTime = 9;   // 最后更新时间
+}
+
+message QueryKnowledgeGapListReq {
+  int32 userID = 1;     // 学生编号
+  int32 problemID = 2;  // 题目编号；0 表示查询全部题目
+  int32 page = 3;       // 页码，从 1 开始
+  int32 limit = 4;      // 每页条数
+  bool includeDisabled = 5; // 是否包含已失效记录
+}
+
+message QueryKnowledgeGapListRsp {
+  string message = 1; // 返回信息
+  int32 code = 2;     // 返回码
+  repeated SocraticKnowledgeGap gaps = 3; // 薄弱点列表
+  int32 total = 4;    // 记录总数
+  bool hasMore = 5;   // 是否还有下一页
+}
+
+message QueryTeacherDashboardReq {
+  int32 teacherID = 1; // 教师编号
+  int32 classID = 2;   // 班级编号；0 表示教师负责的全部班级
+  string startTime = 3; // 开始时间；空表示不限制
+  string endTime = 4;   // 结束时间；空表示不限制
+  int32 topKnowledgeGapLimit = 5; // 高频薄弱点条数，默认 10，0 使用服务端默认值
+  int32 recentSessionLimit = 6;   // 最近会话条数，默认 10，0 使用服务端默认值
+}
+
+message QueryTeacherDashboardRsp {
+  string message = 1; // 返回信息
+  int32 code = 2;     // 返回码
+  TeacherDashboardSummary summary = 3; // 统计概览
+}
+
+message TeacherDashboardSummary {
+  int32 teacherID = 1;          // 教师编号
+  int32 classID = 2;            // 班级编号
+  int32 studentCount = 3;       // 参与学生数
+  int32 activeSessionCount = 4; // 进行中会话数
+  int32 totalSessionCount = 5;  // 会话总数
+  int32 totalMessageCount = 6;  // 消息总数
+  int32 knowledgeGapCount = 7;  // 薄弱点记录总数
+  repeated TeacherKnowledgeGapItem topKnowledgeGaps = 8; // 高频薄弱点
+  repeated TeacherSessionItem recentSessions = 9;        // 最近会话
+}
+
+message QueryTeacherSessionListReq {
+  int32 teacherID = 1;  // 教师编号
+  int32 classID = 2;    // 班级编号；0 表示不限制
+  int32 userID = 3;     // 学生编号；0 表示不限制
+  int32 problemID = 4;  // 题目编号；0 表示不限制
+  int32 status = 5;     // 会话状态，1=进行中 0=已结束；-1 表示全部
+  string keyword = 6;   // 学生姓名、学号、题目名称或内容关键词
+  string startTime = 7; // 开始时间
+  string endTime = 8;   // 结束时间
+  int32 page = 9;       // 页码，从 1 开始
+  int32 limit = 10;     // 每页条数
+}
+
+message QueryTeacherSessionListRsp {
+  string message = 1; // 返回信息
+  int32 code = 2;     // 返回码
+  repeated TeacherSessionItem sessions = 3; // 会话列表
+  int32 total = 4;    // 会话总数
+  bool hasMore = 5;   // 是否还有下一页
+}
+
+message TeacherSessionItem {
+  SocraticSession session = 1; // 会话基础信息
+  string studentName = 2;      // 学生姓名
+  string studentNumber = 3;    // 学生学号
+  string problemName = 4;      // 题目名称
+  string lastMessageTime = 5;  // 最后一条消息时间
+  string lastMessagePreview = 6; // 最后一条消息摘要，前端截断展示
+}
+
+message QueryTeacherSessionDetailReq {
+  int32 teacherID = 1;  // 教师编号
+  int32 classID = 2;    // 班级编号，用于教师权限校验
+  string sessionID = 3; // 会话编号
+}
+
+message QueryTeacherSessionDetailRsp {
+  string message = 1; // 返回信息
+  int32 code = 2;     // 返回码
+  SocraticSession session = 3; // 会话状态
+  repeated SocraticMessage messages = 4; // 会话内消息
+}
+
+message QueryTeacherKnowledgeGapListReq {
+  int32 teacherID = 1;  // 教师编号
+  int32 classID = 2;    // 班级编号；0 表示不限制
+  int32 userID = 3;     // 学生编号；0 表示不限制
+  int32 problemID = 4;  // 题目编号；0 表示不限制
+  int32 knowledgeID = 5; // 知识点编号；0 表示不限制
+  string startTime = 6;  // 开始时间
+  string endTime = 7;    // 结束时间
+  int32 page = 8;        // 页码，从 1 开始
+  int32 limit = 9;       // 每页条数
+}
+
+message QueryTeacherKnowledgeGapListRsp {
+  string message = 1; // 返回信息
+  int32 code = 2;     // 返回码
+  repeated TeacherKnowledgeGapItem items = 3; // 薄弱点列表
+  int32 total = 4;    // 记录总数
+  bool hasMore = 5;   // 是否还有下一页
+}
+
+message TeacherKnowledgeGapItem {
+  SocraticKnowledgeGap gap = 1; // 薄弱点基础信息
+  string studentName = 2;       // 学生姓名
+  string studentNumber = 3;     // 学生学号
+  string problemName = 4;       // 题目名称
+}
