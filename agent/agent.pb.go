@@ -2,16 +2,17 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        v5.29.3
-// source: agent/agent.proto
+// source: agent.proto
 
 package agent
 
 import (
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
+
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -34,7 +35,7 @@ type SocraticAskReq struct {
 
 func (x *SocraticAskReq) Reset() {
 	*x = SocraticAskReq{}
-	mi := &file_agent_agent_proto_msgTypes[0]
+	mi := &file_agent_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -46,7 +47,7 @@ func (x *SocraticAskReq) String() string {
 func (*SocraticAskReq) ProtoMessage() {}
 
 func (x *SocraticAskReq) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[0]
+	mi := &file_agent_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59,7 +60,7 @@ func (x *SocraticAskReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SocraticAskReq.ProtoReflect.Descriptor instead.
 func (*SocraticAskReq) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{0}
+	return file_agent_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *SocraticAskReq) GetProblemID() int32 {
@@ -114,7 +115,7 @@ type SocraticAskRsp struct {
 
 func (x *SocraticAskRsp) Reset() {
 	*x = SocraticAskRsp{}
-	mi := &file_agent_agent_proto_msgTypes[1]
+	mi := &file_agent_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -126,7 +127,7 @@ func (x *SocraticAskRsp) String() string {
 func (*SocraticAskRsp) ProtoMessage() {}
 
 func (x *SocraticAskRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[1]
+	mi := &file_agent_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -139,7 +140,7 @@ func (x *SocraticAskRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SocraticAskRsp.ProtoReflect.Descriptor instead.
 func (*SocraticAskRsp) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{1}
+	return file_agent_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *SocraticAskRsp) GetMessage() string {
@@ -225,7 +226,7 @@ type SocraticAskChunk struct {
 
 func (x *SocraticAskChunk) Reset() {
 	*x = SocraticAskChunk{}
-	mi := &file_agent_agent_proto_msgTypes[2]
+	mi := &file_agent_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -237,7 +238,7 @@ func (x *SocraticAskChunk) String() string {
 func (*SocraticAskChunk) ProtoMessage() {}
 
 func (x *SocraticAskChunk) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[2]
+	mi := &file_agent_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -250,7 +251,7 @@ func (x *SocraticAskChunk) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SocraticAskChunk.ProtoReflect.Descriptor instead.
 func (*SocraticAskChunk) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{2}
+	return file_agent_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *SocraticAskChunk) GetMessage() string {
@@ -348,7 +349,7 @@ type QuerySocraticSessionReq struct {
 
 func (x *QuerySocraticSessionReq) Reset() {
 	*x = QuerySocraticSessionReq{}
-	mi := &file_agent_agent_proto_msgTypes[3]
+	mi := &file_agent_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -360,7 +361,7 @@ func (x *QuerySocraticSessionReq) String() string {
 func (*QuerySocraticSessionReq) ProtoMessage() {}
 
 func (x *QuerySocraticSessionReq) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[3]
+	mi := &file_agent_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -373,7 +374,7 @@ func (x *QuerySocraticSessionReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QuerySocraticSessionReq.ProtoReflect.Descriptor instead.
 func (*QuerySocraticSessionReq) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{3}
+	return file_agent_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *QuerySocraticSessionReq) GetUserID() int32 {
@@ -408,7 +409,7 @@ type QuerySocraticSessionRsp struct {
 
 func (x *QuerySocraticSessionRsp) Reset() {
 	*x = QuerySocraticSessionRsp{}
-	mi := &file_agent_agent_proto_msgTypes[4]
+	mi := &file_agent_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -420,7 +421,7 @@ func (x *QuerySocraticSessionRsp) String() string {
 func (*QuerySocraticSessionRsp) ProtoMessage() {}
 
 func (x *QuerySocraticSessionRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[4]
+	mi := &file_agent_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -433,7 +434,7 @@ func (x *QuerySocraticSessionRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QuerySocraticSessionRsp.ProtoReflect.Descriptor instead.
 func (*QuerySocraticSessionRsp) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{4}
+	return file_agent_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *QuerySocraticSessionRsp) GetMessage() string {
@@ -474,7 +475,7 @@ type QuerySocraticHistoryReq struct {
 
 func (x *QuerySocraticHistoryReq) Reset() {
 	*x = QuerySocraticHistoryReq{}
-	mi := &file_agent_agent_proto_msgTypes[5]
+	mi := &file_agent_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -486,7 +487,7 @@ func (x *QuerySocraticHistoryReq) String() string {
 func (*QuerySocraticHistoryReq) ProtoMessage() {}
 
 func (x *QuerySocraticHistoryReq) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[5]
+	mi := &file_agent_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -499,7 +500,7 @@ func (x *QuerySocraticHistoryReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QuerySocraticHistoryReq.ProtoReflect.Descriptor instead.
 func (*QuerySocraticHistoryReq) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{5}
+	return file_agent_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *QuerySocraticHistoryReq) GetUserID() int32 {
@@ -579,7 +580,7 @@ type QuerySocraticHistoryRsp struct {
 
 func (x *QuerySocraticHistoryRsp) Reset() {
 	*x = QuerySocraticHistoryRsp{}
-	mi := &file_agent_agent_proto_msgTypes[6]
+	mi := &file_agent_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -591,7 +592,7 @@ func (x *QuerySocraticHistoryRsp) String() string {
 func (*QuerySocraticHistoryRsp) ProtoMessage() {}
 
 func (x *QuerySocraticHistoryRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[6]
+	mi := &file_agent_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -604,7 +605,7 @@ func (x *QuerySocraticHistoryRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QuerySocraticHistoryRsp.ProtoReflect.Descriptor instead.
 func (*QuerySocraticHistoryRsp) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{6}
+	return file_agent_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *QuerySocraticHistoryRsp) GetMessage() string {
@@ -661,7 +662,7 @@ type EndSessionReq struct {
 
 func (x *EndSessionReq) Reset() {
 	*x = EndSessionReq{}
-	mi := &file_agent_agent_proto_msgTypes[7]
+	mi := &file_agent_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -673,7 +674,7 @@ func (x *EndSessionReq) String() string {
 func (*EndSessionReq) ProtoMessage() {}
 
 func (x *EndSessionReq) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[7]
+	mi := &file_agent_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -686,7 +687,7 @@ func (x *EndSessionReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EndSessionReq.ProtoReflect.Descriptor instead.
 func (*EndSessionReq) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{7}
+	return file_agent_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *EndSessionReq) GetUserID() int32 {
@@ -728,7 +729,7 @@ type EndSessionRsp struct {
 
 func (x *EndSessionRsp) Reset() {
 	*x = EndSessionRsp{}
-	mi := &file_agent_agent_proto_msgTypes[8]
+	mi := &file_agent_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -740,7 +741,7 @@ func (x *EndSessionRsp) String() string {
 func (*EndSessionRsp) ProtoMessage() {}
 
 func (x *EndSessionRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[8]
+	mi := &file_agent_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -753,7 +754,7 @@ func (x *EndSessionRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EndSessionRsp.ProtoReflect.Descriptor instead.
 func (*EndSessionRsp) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{8}
+	return file_agent_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *EndSessionRsp) GetMessage() string {
@@ -802,7 +803,7 @@ type SocraticSession struct {
 
 func (x *SocraticSession) Reset() {
 	*x = SocraticSession{}
-	mi := &file_agent_agent_proto_msgTypes[9]
+	mi := &file_agent_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -814,7 +815,7 @@ func (x *SocraticSession) String() string {
 func (*SocraticSession) ProtoMessage() {}
 
 func (x *SocraticSession) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[9]
+	mi := &file_agent_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -827,7 +828,7 @@ func (x *SocraticSession) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SocraticSession.ProtoReflect.Descriptor instead.
 func (*SocraticSession) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{9}
+	return file_agent_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *SocraticSession) GetId() int32 {
@@ -972,7 +973,7 @@ type SocraticMessage struct {
 
 func (x *SocraticMessage) Reset() {
 	*x = SocraticMessage{}
-	mi := &file_agent_agent_proto_msgTypes[10]
+	mi := &file_agent_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -984,7 +985,7 @@ func (x *SocraticMessage) String() string {
 func (*SocraticMessage) ProtoMessage() {}
 
 func (x *SocraticMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[10]
+	mi := &file_agent_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -997,7 +998,7 @@ func (x *SocraticMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SocraticMessage.ProtoReflect.Descriptor instead.
 func (*SocraticMessage) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{10}
+	return file_agent_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *SocraticMessage) GetId() int32 {
@@ -1115,7 +1116,7 @@ type KnowledgePoint struct {
 
 func (x *KnowledgePoint) Reset() {
 	*x = KnowledgePoint{}
-	mi := &file_agent_agent_proto_msgTypes[11]
+	mi := &file_agent_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1127,7 +1128,7 @@ func (x *KnowledgePoint) String() string {
 func (*KnowledgePoint) ProtoMessage() {}
 
 func (x *KnowledgePoint) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[11]
+	mi := &file_agent_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1140,7 +1141,7 @@ func (x *KnowledgePoint) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use KnowledgePoint.ProtoReflect.Descriptor instead.
 func (*KnowledgePoint) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{11}
+	return file_agent_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *KnowledgePoint) GetKnowledgeID() int32 {
@@ -1174,7 +1175,7 @@ type SocraticKnowledgeGap struct {
 
 func (x *SocraticKnowledgeGap) Reset() {
 	*x = SocraticKnowledgeGap{}
-	mi := &file_agent_agent_proto_msgTypes[12]
+	mi := &file_agent_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1186,7 +1187,7 @@ func (x *SocraticKnowledgeGap) String() string {
 func (*SocraticKnowledgeGap) ProtoMessage() {}
 
 func (x *SocraticKnowledgeGap) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[12]
+	mi := &file_agent_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1199,7 +1200,7 @@ func (x *SocraticKnowledgeGap) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SocraticKnowledgeGap.ProtoReflect.Descriptor instead.
 func (*SocraticKnowledgeGap) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{12}
+	return file_agent_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *SocraticKnowledgeGap) GetId() int32 {
@@ -1278,7 +1279,7 @@ type QueryKnowledgeGapListReq struct {
 
 func (x *QueryKnowledgeGapListReq) Reset() {
 	*x = QueryKnowledgeGapListReq{}
-	mi := &file_agent_agent_proto_msgTypes[13]
+	mi := &file_agent_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1290,7 +1291,7 @@ func (x *QueryKnowledgeGapListReq) String() string {
 func (*QueryKnowledgeGapListReq) ProtoMessage() {}
 
 func (x *QueryKnowledgeGapListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[13]
+	mi := &file_agent_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1303,7 +1304,7 @@ func (x *QueryKnowledgeGapListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryKnowledgeGapListReq.ProtoReflect.Descriptor instead.
 func (*QueryKnowledgeGapListReq) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{13}
+	return file_agent_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *QueryKnowledgeGapListReq) GetUserID() int32 {
@@ -1354,7 +1355,7 @@ type QueryKnowledgeGapListRsp struct {
 
 func (x *QueryKnowledgeGapListRsp) Reset() {
 	*x = QueryKnowledgeGapListRsp{}
-	mi := &file_agent_agent_proto_msgTypes[14]
+	mi := &file_agent_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1366,7 +1367,7 @@ func (x *QueryKnowledgeGapListRsp) String() string {
 func (*QueryKnowledgeGapListRsp) ProtoMessage() {}
 
 func (x *QueryKnowledgeGapListRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[14]
+	mi := &file_agent_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1379,7 +1380,7 @@ func (x *QueryKnowledgeGapListRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryKnowledgeGapListRsp.ProtoReflect.Descriptor instead.
 func (*QueryKnowledgeGapListRsp) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{14}
+	return file_agent_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *QueryKnowledgeGapListRsp) GetMessage() string {
@@ -1433,7 +1434,7 @@ type QueryTeacherDashboardReq struct {
 
 func (x *QueryTeacherDashboardReq) Reset() {
 	*x = QueryTeacherDashboardReq{}
-	mi := &file_agent_agent_proto_msgTypes[15]
+	mi := &file_agent_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1445,7 +1446,7 @@ func (x *QueryTeacherDashboardReq) String() string {
 func (*QueryTeacherDashboardReq) ProtoMessage() {}
 
 func (x *QueryTeacherDashboardReq) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[15]
+	mi := &file_agent_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1458,7 +1459,7 @@ func (x *QueryTeacherDashboardReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryTeacherDashboardReq.ProtoReflect.Descriptor instead.
 func (*QueryTeacherDashboardReq) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{15}
+	return file_agent_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *QueryTeacherDashboardReq) GetTeacherID() int32 {
@@ -1528,7 +1529,7 @@ type QueryTeacherDashboardRsp struct {
 
 func (x *QueryTeacherDashboardRsp) Reset() {
 	*x = QueryTeacherDashboardRsp{}
-	mi := &file_agent_agent_proto_msgTypes[16]
+	mi := &file_agent_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1540,7 +1541,7 @@ func (x *QueryTeacherDashboardRsp) String() string {
 func (*QueryTeacherDashboardRsp) ProtoMessage() {}
 
 func (x *QueryTeacherDashboardRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[16]
+	mi := &file_agent_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1553,7 +1554,7 @@ func (x *QueryTeacherDashboardRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryTeacherDashboardRsp.ProtoReflect.Descriptor instead.
 func (*QueryTeacherDashboardRsp) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{16}
+	return file_agent_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *QueryTeacherDashboardRsp) GetMessage() string {
@@ -1602,7 +1603,7 @@ type TeacherDashboardSummary struct {
 
 func (x *TeacherDashboardSummary) Reset() {
 	*x = TeacherDashboardSummary{}
-	mi := &file_agent_agent_proto_msgTypes[17]
+	mi := &file_agent_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1614,7 +1615,7 @@ func (x *TeacherDashboardSummary) String() string {
 func (*TeacherDashboardSummary) ProtoMessage() {}
 
 func (x *TeacherDashboardSummary) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[17]
+	mi := &file_agent_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1627,7 +1628,7 @@ func (x *TeacherDashboardSummary) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeacherDashboardSummary.ProtoReflect.Descriptor instead.
 func (*TeacherDashboardSummary) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{17}
+	return file_agent_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *TeacherDashboardSummary) GetTeacherID() int32 {
@@ -1767,7 +1768,7 @@ type QueryTeacherSessionListReq struct {
 
 func (x *QueryTeacherSessionListReq) Reset() {
 	*x = QueryTeacherSessionListReq{}
-	mi := &file_agent_agent_proto_msgTypes[18]
+	mi := &file_agent_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1779,7 +1780,7 @@ func (x *QueryTeacherSessionListReq) String() string {
 func (*QueryTeacherSessionListReq) ProtoMessage() {}
 
 func (x *QueryTeacherSessionListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[18]
+	mi := &file_agent_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1792,7 +1793,7 @@ func (x *QueryTeacherSessionListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryTeacherSessionListReq.ProtoReflect.Descriptor instead.
 func (*QueryTeacherSessionListReq) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{18}
+	return file_agent_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *QueryTeacherSessionListReq) GetTeacherID() int32 {
@@ -1878,7 +1879,7 @@ type QueryTeacherSessionListRsp struct {
 
 func (x *QueryTeacherSessionListRsp) Reset() {
 	*x = QueryTeacherSessionListRsp{}
-	mi := &file_agent_agent_proto_msgTypes[19]
+	mi := &file_agent_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1890,7 +1891,7 @@ func (x *QueryTeacherSessionListRsp) String() string {
 func (*QueryTeacherSessionListRsp) ProtoMessage() {}
 
 func (x *QueryTeacherSessionListRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[19]
+	mi := &file_agent_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1903,7 +1904,7 @@ func (x *QueryTeacherSessionListRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryTeacherSessionListRsp.ProtoReflect.Descriptor instead.
 func (*QueryTeacherSessionListRsp) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{19}
+	return file_agent_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *QueryTeacherSessionListRsp) GetMessage() string {
@@ -1960,7 +1961,7 @@ type TeacherSessionItem struct {
 
 func (x *TeacherSessionItem) Reset() {
 	*x = TeacherSessionItem{}
-	mi := &file_agent_agent_proto_msgTypes[20]
+	mi := &file_agent_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1972,7 +1973,7 @@ func (x *TeacherSessionItem) String() string {
 func (*TeacherSessionItem) ProtoMessage() {}
 
 func (x *TeacherSessionItem) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[20]
+	mi := &file_agent_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1985,7 +1986,7 @@ func (x *TeacherSessionItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeacherSessionItem.ProtoReflect.Descriptor instead.
 func (*TeacherSessionItem) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{20}
+	return file_agent_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *TeacherSessionItem) GetSession() *SocraticSession {
@@ -2077,7 +2078,7 @@ type TeacherKnowledgeTrendItem struct {
 
 func (x *TeacherKnowledgeTrendItem) Reset() {
 	*x = TeacherKnowledgeTrendItem{}
-	mi := &file_agent_agent_proto_msgTypes[21]
+	mi := &file_agent_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2089,7 +2090,7 @@ func (x *TeacherKnowledgeTrendItem) String() string {
 func (*TeacherKnowledgeTrendItem) ProtoMessage() {}
 
 func (x *TeacherKnowledgeTrendItem) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[21]
+	mi := &file_agent_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2102,7 +2103,7 @@ func (x *TeacherKnowledgeTrendItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeacherKnowledgeTrendItem.ProtoReflect.Descriptor instead.
 func (*TeacherKnowledgeTrendItem) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{21}
+	return file_agent_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *TeacherKnowledgeTrendItem) GetStatDate() string {
@@ -2144,7 +2145,7 @@ type QueryTeacherSessionDetailReq struct {
 
 func (x *QueryTeacherSessionDetailReq) Reset() {
 	*x = QueryTeacherSessionDetailReq{}
-	mi := &file_agent_agent_proto_msgTypes[22]
+	mi := &file_agent_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2156,7 +2157,7 @@ func (x *QueryTeacherSessionDetailReq) String() string {
 func (*QueryTeacherSessionDetailReq) ProtoMessage() {}
 
 func (x *QueryTeacherSessionDetailReq) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[22]
+	mi := &file_agent_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2169,7 +2170,7 @@ func (x *QueryTeacherSessionDetailReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryTeacherSessionDetailReq.ProtoReflect.Descriptor instead.
 func (*QueryTeacherSessionDetailReq) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{22}
+	return file_agent_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *QueryTeacherSessionDetailReq) GetTeacherID() int32 {
@@ -2205,7 +2206,7 @@ type QueryTeacherSessionDetailRsp struct {
 
 func (x *QueryTeacherSessionDetailRsp) Reset() {
 	*x = QueryTeacherSessionDetailRsp{}
-	mi := &file_agent_agent_proto_msgTypes[23]
+	mi := &file_agent_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2217,7 +2218,7 @@ func (x *QueryTeacherSessionDetailRsp) String() string {
 func (*QueryTeacherSessionDetailRsp) ProtoMessage() {}
 
 func (x *QueryTeacherSessionDetailRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[23]
+	mi := &file_agent_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2230,7 +2231,7 @@ func (x *QueryTeacherSessionDetailRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryTeacherSessionDetailRsp.ProtoReflect.Descriptor instead.
 func (*QueryTeacherSessionDetailRsp) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{23}
+	return file_agent_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *QueryTeacherSessionDetailRsp) GetMessage() string {
@@ -2278,7 +2279,7 @@ type QueryTeacherKnowledgeGapListReq struct {
 
 func (x *QueryTeacherKnowledgeGapListReq) Reset() {
 	*x = QueryTeacherKnowledgeGapListReq{}
-	mi := &file_agent_agent_proto_msgTypes[24]
+	mi := &file_agent_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2290,7 +2291,7 @@ func (x *QueryTeacherKnowledgeGapListReq) String() string {
 func (*QueryTeacherKnowledgeGapListReq) ProtoMessage() {}
 
 func (x *QueryTeacherKnowledgeGapListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[24]
+	mi := &file_agent_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2303,7 +2304,7 @@ func (x *QueryTeacherKnowledgeGapListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryTeacherKnowledgeGapListReq.ProtoReflect.Descriptor instead.
 func (*QueryTeacherKnowledgeGapListReq) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{24}
+	return file_agent_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *QueryTeacherKnowledgeGapListReq) GetTeacherID() int32 {
@@ -2382,7 +2383,7 @@ type QueryTeacherKnowledgeGapListRsp struct {
 
 func (x *QueryTeacherKnowledgeGapListRsp) Reset() {
 	*x = QueryTeacherKnowledgeGapListRsp{}
-	mi := &file_agent_agent_proto_msgTypes[25]
+	mi := &file_agent_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2394,7 +2395,7 @@ func (x *QueryTeacherKnowledgeGapListRsp) String() string {
 func (*QueryTeacherKnowledgeGapListRsp) ProtoMessage() {}
 
 func (x *QueryTeacherKnowledgeGapListRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[25]
+	mi := &file_agent_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2407,7 +2408,7 @@ func (x *QueryTeacherKnowledgeGapListRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryTeacherKnowledgeGapListRsp.ProtoReflect.Descriptor instead.
 func (*QueryTeacherKnowledgeGapListRsp) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{25}
+	return file_agent_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *QueryTeacherKnowledgeGapListRsp) GetMessage() string {
@@ -2457,7 +2458,7 @@ type TeacherKnowledgeGapItem struct {
 
 func (x *TeacherKnowledgeGapItem) Reset() {
 	*x = TeacherKnowledgeGapItem{}
-	mi := &file_agent_agent_proto_msgTypes[26]
+	mi := &file_agent_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2469,7 +2470,7 @@ func (x *TeacherKnowledgeGapItem) String() string {
 func (*TeacherKnowledgeGapItem) ProtoMessage() {}
 
 func (x *TeacherKnowledgeGapItem) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[26]
+	mi := &file_agent_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2482,7 +2483,7 @@ func (x *TeacherKnowledgeGapItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeacherKnowledgeGapItem.ProtoReflect.Descriptor instead.
 func (*TeacherKnowledgeGapItem) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{26}
+	return file_agent_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *TeacherKnowledgeGapItem) GetGap() *SocraticKnowledgeGap {
@@ -2513,11 +2514,11 @@ func (x *TeacherKnowledgeGapItem) GetProblemName() string {
 	return ""
 }
 
-var File_agent_agent_proto protoreflect.FileDescriptor
+var File_agent_proto protoreflect.FileDescriptor
 
-const file_agent_agent_proto_rawDesc = "" +
+const file_agent_proto_rawDesc = "" +
 	"\n" +
-	"\x11agent/agent.proto\x12\boj.agent\"\xa0\x01\n" +
+	"\vagent.proto\x12\boj.agent\"\xa0\x01\n" +
 	"\x0eSocraticAskReq\x12\x1c\n" +
 	"\tproblemID\x18\x01 \x01(\x05R\tproblemID\x12\x16\n" +
 	"\x06userID\x18\x02 \x01(\x05R\x06userID\x12\x1a\n" +
@@ -2759,19 +2760,19 @@ const file_agent_agent_proto_rawDesc = "" +
 	"\x1cQueryTeacherKnowledgeGapList\x12).oj.agent.QueryTeacherKnowledgeGapListReq\x1a).oj.agent.QueryTeacherKnowledgeGapListRsp\"\x00B&Z$github.com/csuJudge/agentProto/agentb\x06proto3"
 
 var (
-	file_agent_agent_proto_rawDescOnce sync.Once
-	file_agent_agent_proto_rawDescData []byte
+	file_agent_proto_rawDescOnce sync.Once
+	file_agent_proto_rawDescData []byte
 )
 
-func file_agent_agent_proto_rawDescGZIP() []byte {
-	file_agent_agent_proto_rawDescOnce.Do(func() {
-		file_agent_agent_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_agent_agent_proto_rawDesc), len(file_agent_agent_proto_rawDesc)))
+func file_agent_proto_rawDescGZIP() []byte {
+	file_agent_proto_rawDescOnce.Do(func() {
+		file_agent_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_agent_proto_rawDesc), len(file_agent_proto_rawDesc)))
 	})
-	return file_agent_agent_proto_rawDescData
+	return file_agent_proto_rawDescData
 }
 
-var file_agent_agent_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
-var file_agent_agent_proto_goTypes = []any{
+var file_agent_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
+var file_agent_proto_goTypes = []any{
 	(*SocraticAskReq)(nil),                  // 0: oj.agent.SocraticAskReq
 	(*SocraticAskRsp)(nil),                  // 1: oj.agent.SocraticAskRsp
 	(*SocraticAskChunk)(nil),                // 2: oj.agent.SocraticAskChunk
@@ -2800,7 +2801,7 @@ var file_agent_agent_proto_goTypes = []any{
 	(*QueryTeacherKnowledgeGapListRsp)(nil), // 25: oj.agent.QueryTeacherKnowledgeGapListRsp
 	(*TeacherKnowledgeGapItem)(nil),         // 26: oj.agent.TeacherKnowledgeGapItem
 }
-var file_agent_agent_proto_depIdxs = []int32{
+var file_agent_proto_depIdxs = []int32{
 	9,  // 0: oj.agent.SocraticAskRsp.session:type_name -> oj.agent.SocraticSession
 	10, // 1: oj.agent.SocraticAskRsp.studentMessage:type_name -> oj.agent.SocraticMessage
 	10, // 2: oj.agent.SocraticAskRsp.agentMessage:type_name -> oj.agent.SocraticMessage
@@ -2850,26 +2851,26 @@ var file_agent_agent_proto_depIdxs = []int32{
 	0,  // [0:22] is the sub-list for field type_name
 }
 
-func init() { file_agent_agent_proto_init() }
-func file_agent_agent_proto_init() {
-	if File_agent_agent_proto != nil {
+func init() { file_agent_proto_init() }
+func file_agent_proto_init() {
+	if File_agent_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_agent_agent_proto_rawDesc), len(file_agent_agent_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_agent_proto_rawDesc), len(file_agent_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_agent_agent_proto_goTypes,
-		DependencyIndexes: file_agent_agent_proto_depIdxs,
-		MessageInfos:      file_agent_agent_proto_msgTypes,
+		GoTypes:           file_agent_proto_goTypes,
+		DependencyIndexes: file_agent_proto_depIdxs,
+		MessageInfos:      file_agent_proto_msgTypes,
 	}.Build()
-	File_agent_agent_proto = out.File
-	file_agent_agent_proto_goTypes = nil
-	file_agent_agent_proto_depIdxs = nil
+	File_agent_proto = out.File
+	file_agent_proto_goTypes = nil
+	file_agent_proto_depIdxs = nil
 }
