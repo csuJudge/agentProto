@@ -124,6 +124,12 @@ message SocraticSession {
   int32 enable = 9;         // 1=进行中 0=已结束
   string createdTime = 10;  // 创建时间
   string updatedTime = 11;  // 最后更新时间
+  bool effectEvaluated = 12; // 教学效果是否已完成评估
+  bool finalAC = 13;         // 结束会话后学生最新提交是否通过
+  bool effectiveGuidance = 14; // 本次引导是否达成有效教学效果
+  int32 selfExplanationScore = 15; // 自我解释评分，0-3 分
+  repeated int32 hintLevelTrace = 16; // Agent 回复的提示等级轨迹
+  string evaluatedTime = 17; // 效果评估时间
 }
 
 message SocraticMessage {
@@ -184,6 +190,8 @@ message QueryTeacherDashboardReq {
   string endTime = 4;   // 结束时间；空表示不限制
   int32 topKnowledgeGapLimit = 5; // 高频薄弱点条数，默认 10，0 使用服务端默认值
   int32 recentSessionLimit = 6;   // 最近会话条数，默认 10，0 使用服务端默认值
+  int32 userID = 7;     // 学生编号；0 表示不限制
+  int32 problemID = 8;  // 题目编号；0 表示不限制
 }
 
 message QueryTeacherDashboardRsp {
@@ -202,6 +210,14 @@ message TeacherDashboardSummary {
   int32 knowledgeGapCount = 7;  // 薄弱点记录总数
   repeated TeacherKnowledgeGapItem topKnowledgeGaps = 8; // 高频薄弱点
   repeated TeacherSessionItem recentSessions = 9;        // 最近会话
+  int32 evaluatedSessionCount = 10; // 已评估教学效果的会话数
+  int32 finalACSessionCount = 11;   // 会话结束后最终 AC 的会话数
+  int32 effectiveSessionCount = 12; // 判定为有效引导的会话数
+  double finalACRate = 13;          // 最终 AC 比例
+  double effectiveGuidanceRate = 14; // 有效引导率
+  double averageTurnCount = 15;     // 已评估会话平均轮次
+  double averageSelfExplanationScore = 16; // 平均自我解释得分
+  repeated TeacherKnowledgeTrendItem growthTrends = 17; // 最近画像成长趋势
 }
 
 message QueryTeacherSessionListReq {
@@ -232,6 +248,18 @@ message TeacherSessionItem {
   string problemName = 4;      // 题目名称
   string lastMessageTime = 5;  // 最后一条消息时间
   string lastMessagePreview = 6; // 最后一条消息摘要，前端截断展示
+  bool effectEvaluated = 7; // 教学效果是否已完成评估
+  bool finalAC = 8;         // 结束会话后学生最新提交是否通过
+  bool effectiveGuidance = 9; // 本次引导是否达成有效教学效果
+  int32 selfExplanationScore = 10; // 自我解释评分，0-3 分
+  repeated int32 hintLevelTrace = 11; // Agent 回复的提示等级轨迹
+}
+
+message TeacherKnowledgeTrendItem {
+  string statDate = 1;    // 统计日期，格式 YYYY-MM-DD
+  string knowledgeName = 2; // 知识点名称
+  int32 occurrenceCount = 3; // 当日出现次数
+  int32 studentCount = 4;    // 当日覆盖学生数
 }
 
 message QueryTeacherSessionDetailReq {
