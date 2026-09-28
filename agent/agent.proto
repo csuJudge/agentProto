@@ -266,6 +266,8 @@ message QueryTeacherSessionDetailReq {
   int32 teacherID = 1;  // 教师编号
   int32 classID = 2;    // 班级编号，用于教师权限校验
   string sessionID = 3; // 会话编号
+  int32 page = 4;       // 消息页码，从 1 开始
+  int32 limit = 5;      // 消息每页条数；0 使用默认值
 }
 
 message QueryTeacherSessionDetailRsp {
@@ -273,6 +275,8 @@ message QueryTeacherSessionDetailRsp {
   int32 code = 2;     // 返回码
   SocraticSession session = 3; // 会话状态
   repeated SocraticMessage messages = 4; // 会话内消息
+  int32 total = 5;    // 会话内消息总数
+  bool hasMore = 6;   // 是否还有下一页
 }
 
 message QueryTeacherKnowledgeGapListReq {
