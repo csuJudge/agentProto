@@ -200,6 +200,26 @@ message QueryTeacherDashboardRsp {
   TeacherDashboardSummary summary = 3; // 统计概览
 }
 
+enum EffectTaskStatus {
+  EFFECT_TASK_STATUS_UNSPECIFIED = 0; // 未指定状态
+  EFFECT_TASK_STATUS_PENDING = 1;     // 待执行，包含等待下次重试的任务
+  EFFECT_TASK_STATUS_RUNNING = 2;     // 已被某个实例租约占用
+  EFFECT_TASK_STATUS_SUCCEEDED = 3;   // 已成功完成
+  EFFECT_TASK_STATUS_DEAD_LETTER = 4; // 重试耗尽后进入死信
+}
+
+message EffectTaskIssue {
+  int64 taskID = 1;               // 任务自增编号
+  string sessionID = 2;           // 关联会话编号
+  int32 userID = 3;               // 学生编号
+  int32 problemID = 4;            // 题目编号
+  int32 retryCount = 5;           // 已执行次数
+  EffectTaskStatus status = 6;    // 任务状态
+  string lastError = 7;           // 最近一次失败原因
+  string createdTime = 8;         // 任务创建时间
+  string updatedTime = 9;         // 最近更新时间
+}
+
 message TeacherDashboardSummary {
   int32 teacherID = 1;          // 教师编号
   int32 classID = 2;            // 班级编号
@@ -218,6 +238,13 @@ message TeacherDashboardSummary {
   double averageTurnCount = 15;     // 已评估会话平均轮次
   double averageSelfExplanationScore = 16; // 平均自我解释得分
   repeated TeacherKnowledgeTrendItem growthTrends = 17; // 最近画像成长趋势
+  int32 effectTaskPendingCount = 18;          // 教学效果任务待执行数，包含等待重试的任务
+  int32 effectTaskRunningCount = 19;          // 教学效果任务执行中数量
+  int32 effectTaskSucceededCount = 20;        // 教学效果任务成功数
+  int32 effectTaskDeadLetterCount = 21;       // 教学效果任务死信数
+  int32 effectTaskRetryingCount = 22;         // 教学效果任务重试数，即 pending 且 retry_count>0
+  int32 effectTaskOldestPendingAgeSeconds = 23; // 最老待执行任务已创建秒数；无任务为 0
+  repeated EffectTaskIssue effectTaskIssues = 24; // 死信或长期重试任务样本，默认只返回有限条数
 }
 
 message QueryTeacherSessionListReq {
