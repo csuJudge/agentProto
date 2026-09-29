@@ -2161,18 +2161,19 @@ func (x *QueryTeacherSessionListRsp) GetHasMore() bool {
 }
 
 type TeacherSessionItem struct {
-	state                protoimpl.MessageState `protogen:"open.v1"`
-	Session              *SocraticSession       `protobuf:"bytes,1,opt,name=session,proto3" json:"session,omitempty"`                             // 会话基础信息
-	StudentName          string                 `protobuf:"bytes,2,opt,name=studentName,proto3" json:"studentName,omitempty"`                     // 学生姓名
-	StudentNumber        string                 `protobuf:"bytes,3,opt,name=studentNumber,proto3" json:"studentNumber,omitempty"`                 // 学生学号
-	ProblemName          string                 `protobuf:"bytes,4,opt,name=problemName,proto3" json:"problemName,omitempty"`                     // 题目名称
-	LastMessageTime      string                 `protobuf:"bytes,5,opt,name=lastMessageTime,proto3" json:"lastMessageTime,omitempty"`             // 最后一条消息时间
-	LastMessagePreview   string                 `protobuf:"bytes,6,opt,name=lastMessagePreview,proto3" json:"lastMessagePreview,omitempty"`       // 最后一条消息摘要，前端截断展示
-	EffectEvaluated      bool                   `protobuf:"varint,7,opt,name=effectEvaluated,proto3" json:"effectEvaluated,omitempty"`            // 教学效果是否已完成评估
-	FinalAC              bool                   `protobuf:"varint,8,opt,name=finalAC,proto3" json:"finalAC,omitempty"`                            // 结束会话后学生最新提交是否通过
-	EffectiveGuidance    bool                   `protobuf:"varint,9,opt,name=effectiveGuidance,proto3" json:"effectiveGuidance,omitempty"`        // 本次引导是否达成有效教学效果
-	SelfExplanationScore int32                  `protobuf:"varint,10,opt,name=selfExplanationScore,proto3" json:"selfExplanationScore,omitempty"` // 自我解释评分，0-3 分
-	HintLevelTrace       []int32                `protobuf:"varint,11,rep,packed,name=hintLevelTrace,proto3" json:"hintLevelTrace,omitempty"`      // Agent 回复的提示等级轨迹
+	state                protoimpl.MessageState    `protogen:"open.v1"`
+	Session              *SocraticSession          `protobuf:"bytes,1,opt,name=session,proto3" json:"session,omitempty"`                             // 会话基础信息
+	StudentName          string                    `protobuf:"bytes,2,opt,name=studentName,proto3" json:"studentName,omitempty"`                     // 学生姓名
+	StudentNumber        string                    `protobuf:"bytes,3,opt,name=studentNumber,proto3" json:"studentNumber,omitempty"`                 // 学生学号
+	ProblemName          string                    `protobuf:"bytes,4,opt,name=problemName,proto3" json:"problemName,omitempty"`                     // 题目名称
+	LastMessageTime      string                    `protobuf:"bytes,5,opt,name=lastMessageTime,proto3" json:"lastMessageTime,omitempty"`             // 最后一条消息时间
+	LastMessagePreview   string                    `protobuf:"bytes,6,opt,name=lastMessagePreview,proto3" json:"lastMessagePreview,omitempty"`       // 最后一条消息摘要，前端截断展示
+	EffectEvaluated      bool                      `protobuf:"varint,7,opt,name=effectEvaluated,proto3" json:"effectEvaluated,omitempty"`            // 教学效果是否已完成评估
+	FinalAC              bool                      `protobuf:"varint,8,opt,name=finalAC,proto3" json:"finalAC,omitempty"`                            // 结束会话后学生最新提交是否通过
+	EffectiveGuidance    bool                      `protobuf:"varint,9,opt,name=effectiveGuidance,proto3" json:"effectiveGuidance,omitempty"`        // 本次引导是否达成有效教学效果
+	SelfExplanationScore int32                     `protobuf:"varint,10,opt,name=selfExplanationScore,proto3" json:"selfExplanationScore,omitempty"` // 自我解释评分，0-3 分
+	HintLevelTrace       []int32                   `protobuf:"varint,11,rep,packed,name=hintLevelTrace,proto3" json:"hintLevelTrace,omitempty"`      // Agent 回复的提示等级轨迹
+	EffectTask           *TeacherSessionEffectTask `protobuf:"bytes,12,opt,name=effectTask,proto3" json:"effectTask,omitempty"`                      // 当前会话的教学效果任务状态；进行中会话可为空
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
 }
@@ -2280,6 +2281,13 @@ func (x *TeacherSessionItem) GetSelfExplanationScore() int32 {
 func (x *TeacherSessionItem) GetHintLevelTrace() []int32 {
 	if x != nil {
 		return x.HintLevelTrace
+	}
+	return nil
+}
+
+func (x *TeacherSessionItem) GetEffectTask() *TeacherSessionEffectTask {
+	if x != nil {
+		return x.EffectTask
 	}
 	return nil
 }
@@ -2429,13 +2437,14 @@ func (x *QueryTeacherSessionDetailReq) GetLimit() int32 {
 }
 
 type QueryTeacherSessionDetailRsp struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`   // 返回信息
-	Code          int32                  `protobuf:"varint,2,opt,name=code,proto3" json:"code,omitempty"`        // 返回码
-	Session       *SocraticSession       `protobuf:"bytes,3,opt,name=session,proto3" json:"session,omitempty"`   // 会话状态
-	Messages      []*SocraticMessage     `protobuf:"bytes,4,rep,name=messages,proto3" json:"messages,omitempty"` // 会话内消息
-	Total         int32                  `protobuf:"varint,5,opt,name=total,proto3" json:"total,omitempty"`      // 会话内消息总数
-	HasMore       bool                   `protobuf:"varint,6,opt,name=hasMore,proto3" json:"hasMore,omitempty"`  // 是否还有下一页
+	state         protoimpl.MessageState    `protogen:"open.v1"`
+	Message       string                    `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`       // 返回信息
+	Code          int32                     `protobuf:"varint,2,opt,name=code,proto3" json:"code,omitempty"`            // 返回码
+	Session       *SocraticSession          `protobuf:"bytes,3,opt,name=session,proto3" json:"session,omitempty"`       // 会话状态
+	Messages      []*SocraticMessage        `protobuf:"bytes,4,rep,name=messages,proto3" json:"messages,omitempty"`     // 会话内消息
+	Total         int32                     `protobuf:"varint,5,opt,name=total,proto3" json:"total,omitempty"`          // 会话内消息总数
+	HasMore       bool                      `protobuf:"varint,6,opt,name=hasMore,proto3" json:"hasMore,omitempty"`      // 是否还有下一页
+	EffectTask    *TeacherSessionEffectTask `protobuf:"bytes,7,opt,name=effectTask,proto3" json:"effectTask,omitempty"` // 会话对应的教学效果任务状态；无任务时为空
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2512,6 +2521,113 @@ func (x *QueryTeacherSessionDetailRsp) GetHasMore() bool {
 	return false
 }
 
+func (x *QueryTeacherSessionDetailRsp) GetEffectTask() *TeacherSessionEffectTask {
+	if x != nil {
+		return x.EffectTask
+	}
+	return nil
+}
+
+type TeacherSessionEffectTask struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TaskID        int64                  `protobuf:"varint,1,opt,name=taskID,proto3" json:"taskID,omitempty"`                                // 任务自增编号
+	SessionID     string                 `protobuf:"bytes,2,opt,name=sessionID,proto3" json:"sessionID,omitempty"`                           // 关联会话编号
+	RetryCount    int32                  `protobuf:"varint,3,opt,name=retryCount,proto3" json:"retryCount,omitempty"`                        // 已执行次数
+	Status        EffectTaskStatus       `protobuf:"varint,4,opt,name=status,proto3,enum=oj.agent.EffectTaskStatus" json:"status,omitempty"` // 任务状态
+	LastError     string                 `protobuf:"bytes,5,opt,name=lastError,proto3" json:"lastError,omitempty"`                           // 最近一次失败原因
+	AvailableTime string                 `protobuf:"bytes,6,opt,name=availableTime,proto3" json:"availableTime,omitempty"`                   // 下次可执行时间；已完成或无任务为空
+	CreatedTime   string                 `protobuf:"bytes,7,opt,name=createdTime,proto3" json:"createdTime,omitempty"`                       // 任务创建时间
+	UpdatedTime   string                 `protobuf:"bytes,8,opt,name=updatedTime,proto3" json:"updatedTime,omitempty"`                       // 最近更新时间
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TeacherSessionEffectTask) Reset() {
+	*x = TeacherSessionEffectTask{}
+	mi := &file_agent_agent_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TeacherSessionEffectTask) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TeacherSessionEffectTask) ProtoMessage() {}
+
+func (x *TeacherSessionEffectTask) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_agent_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TeacherSessionEffectTask.ProtoReflect.Descriptor instead.
+func (*TeacherSessionEffectTask) Descriptor() ([]byte, []int) {
+	return file_agent_agent_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *TeacherSessionEffectTask) GetTaskID() int64 {
+	if x != nil {
+		return x.TaskID
+	}
+	return 0
+}
+
+func (x *TeacherSessionEffectTask) GetSessionID() string {
+	if x != nil {
+		return x.SessionID
+	}
+	return ""
+}
+
+func (x *TeacherSessionEffectTask) GetRetryCount() int32 {
+	if x != nil {
+		return x.RetryCount
+	}
+	return 0
+}
+
+func (x *TeacherSessionEffectTask) GetStatus() EffectTaskStatus {
+	if x != nil {
+		return x.Status
+	}
+	return EffectTaskStatus_EFFECT_TASK_STATUS_UNSPECIFIED
+}
+
+func (x *TeacherSessionEffectTask) GetLastError() string {
+	if x != nil {
+		return x.LastError
+	}
+	return ""
+}
+
+func (x *TeacherSessionEffectTask) GetAvailableTime() string {
+	if x != nil {
+		return x.AvailableTime
+	}
+	return ""
+}
+
+func (x *TeacherSessionEffectTask) GetCreatedTime() string {
+	if x != nil {
+		return x.CreatedTime
+	}
+	return ""
+}
+
+func (x *TeacherSessionEffectTask) GetUpdatedTime() string {
+	if x != nil {
+		return x.UpdatedTime
+	}
+	return ""
+}
+
 type QueryTeacherKnowledgeGapListReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TeacherID     int32                  `protobuf:"varint,1,opt,name=teacherID,proto3" json:"teacherID,omitempty"`     // 教师编号
@@ -2529,7 +2645,7 @@ type QueryTeacherKnowledgeGapListReq struct {
 
 func (x *QueryTeacherKnowledgeGapListReq) Reset() {
 	*x = QueryTeacherKnowledgeGapListReq{}
-	mi := &file_agent_agent_proto_msgTypes[25]
+	mi := &file_agent_agent_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2541,7 +2657,7 @@ func (x *QueryTeacherKnowledgeGapListReq) String() string {
 func (*QueryTeacherKnowledgeGapListReq) ProtoMessage() {}
 
 func (x *QueryTeacherKnowledgeGapListReq) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[25]
+	mi := &file_agent_agent_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2554,7 +2670,7 @@ func (x *QueryTeacherKnowledgeGapListReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryTeacherKnowledgeGapListReq.ProtoReflect.Descriptor instead.
 func (*QueryTeacherKnowledgeGapListReq) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{25}
+	return file_agent_agent_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *QueryTeacherKnowledgeGapListReq) GetTeacherID() int32 {
@@ -2633,7 +2749,7 @@ type QueryTeacherKnowledgeGapListRsp struct {
 
 func (x *QueryTeacherKnowledgeGapListRsp) Reset() {
 	*x = QueryTeacherKnowledgeGapListRsp{}
-	mi := &file_agent_agent_proto_msgTypes[26]
+	mi := &file_agent_agent_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2645,7 +2761,7 @@ func (x *QueryTeacherKnowledgeGapListRsp) String() string {
 func (*QueryTeacherKnowledgeGapListRsp) ProtoMessage() {}
 
 func (x *QueryTeacherKnowledgeGapListRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[26]
+	mi := &file_agent_agent_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2658,7 +2774,7 @@ func (x *QueryTeacherKnowledgeGapListRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QueryTeacherKnowledgeGapListRsp.ProtoReflect.Descriptor instead.
 func (*QueryTeacherKnowledgeGapListRsp) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{26}
+	return file_agent_agent_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *QueryTeacherKnowledgeGapListRsp) GetMessage() string {
@@ -2708,7 +2824,7 @@ type TeacherKnowledgeGapItem struct {
 
 func (x *TeacherKnowledgeGapItem) Reset() {
 	*x = TeacherKnowledgeGapItem{}
-	mi := &file_agent_agent_proto_msgTypes[27]
+	mi := &file_agent_agent_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2720,7 +2836,7 @@ func (x *TeacherKnowledgeGapItem) String() string {
 func (*TeacherKnowledgeGapItem) ProtoMessage() {}
 
 func (x *TeacherKnowledgeGapItem) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_agent_proto_msgTypes[27]
+	mi := &file_agent_agent_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2733,7 +2849,7 @@ func (x *TeacherKnowledgeGapItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TeacherKnowledgeGapItem.ProtoReflect.Descriptor instead.
 func (*TeacherKnowledgeGapItem) Descriptor() ([]byte, []int) {
-	return file_agent_agent_proto_rawDescGZIP(), []int{27}
+	return file_agent_agent_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *TeacherKnowledgeGapItem) GetGap() *SocraticKnowledgeGap {
@@ -2967,7 +3083,7 @@ const file_agent_agent_proto_rawDesc = "" +
 	"\x04code\x18\x02 \x01(\x05R\x04code\x128\n" +
 	"\bsessions\x18\x03 \x03(\v2\x1c.oj.agent.TeacherSessionItemR\bsessions\x12\x14\n" +
 	"\x05total\x18\x04 \x01(\x05R\x05total\x12\x18\n" +
-	"\ahasMore\x18\x05 \x01(\bR\ahasMore\"\xdb\x03\n" +
+	"\ahasMore\x18\x05 \x01(\bR\ahasMore\"\x9f\x04\n" +
 	"\x12TeacherSessionItem\x123\n" +
 	"\asession\x18\x01 \x01(\v2\x19.oj.agent.SocraticSessionR\asession\x12 \n" +
 	"\vstudentName\x18\x02 \x01(\tR\vstudentName\x12$\n" +
@@ -2980,7 +3096,10 @@ const file_agent_agent_proto_rawDesc = "" +
 	"\x11effectiveGuidance\x18\t \x01(\bR\x11effectiveGuidance\x122\n" +
 	"\x14selfExplanationScore\x18\n" +
 	" \x01(\x05R\x14selfExplanationScore\x12&\n" +
-	"\x0ehintLevelTrace\x18\v \x03(\x05R\x0ehintLevelTrace\"\xab\x01\n" +
+	"\x0ehintLevelTrace\x18\v \x03(\x05R\x0ehintLevelTrace\x12B\n" +
+	"\n" +
+	"effectTask\x18\f \x01(\v2\".oj.agent.TeacherSessionEffectTaskR\n" +
+	"effectTask\"\xab\x01\n" +
 	"\x19TeacherKnowledgeTrendItem\x12\x1a\n" +
 	"\bstatDate\x18\x01 \x01(\tR\bstatDate\x12$\n" +
 	"\rknowledgeName\x18\x02 \x01(\tR\rknowledgeName\x12(\n" +
@@ -2991,14 +3110,28 @@ const file_agent_agent_proto_rawDesc = "" +
 	"\aclassID\x18\x02 \x01(\x05R\aclassID\x12\x1c\n" +
 	"\tsessionID\x18\x03 \x01(\tR\tsessionID\x12\x12\n" +
 	"\x04page\x18\x04 \x01(\x05R\x04page\x12\x14\n" +
-	"\x05limit\x18\x05 \x01(\x05R\x05limit\"\xe8\x01\n" +
+	"\x05limit\x18\x05 \x01(\x05R\x05limit\"\xac\x02\n" +
 	"\x1cQueryTeacherSessionDetailRsp\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\x05R\x04code\x123\n" +
 	"\asession\x18\x03 \x01(\v2\x19.oj.agent.SocraticSessionR\asession\x125\n" +
 	"\bmessages\x18\x04 \x03(\v2\x19.oj.agent.SocraticMessageR\bmessages\x12\x14\n" +
 	"\x05total\x18\x05 \x01(\x05R\x05total\x12\x18\n" +
-	"\ahasMore\x18\x06 \x01(\bR\ahasMore\"\x93\x02\n" +
+	"\ahasMore\x18\x06 \x01(\bR\ahasMore\x12B\n" +
+	"\n" +
+	"effectTask\x18\a \x01(\v2\".oj.agent.TeacherSessionEffectTaskR\n" +
+	"effectTask\"\xac\x02\n" +
+	"\x18TeacherSessionEffectTask\x12\x16\n" +
+	"\x06taskID\x18\x01 \x01(\x03R\x06taskID\x12\x1c\n" +
+	"\tsessionID\x18\x02 \x01(\tR\tsessionID\x12\x1e\n" +
+	"\n" +
+	"retryCount\x18\x03 \x01(\x05R\n" +
+	"retryCount\x122\n" +
+	"\x06status\x18\x04 \x01(\x0e2\x1a.oj.agent.EffectTaskStatusR\x06status\x12\x1c\n" +
+	"\tlastError\x18\x05 \x01(\tR\tlastError\x12$\n" +
+	"\ravailableTime\x18\x06 \x01(\tR\ravailableTime\x12 \n" +
+	"\vcreatedTime\x18\a \x01(\tR\vcreatedTime\x12 \n" +
+	"\vupdatedTime\x18\b \x01(\tR\vupdatedTime\"\x93\x02\n" +
 	"\x1fQueryTeacherKnowledgeGapListReq\x12\x1c\n" +
 	"\tteacherID\x18\x01 \x01(\x05R\tteacherID\x12\x18\n" +
 	"\aclassID\x18\x02 \x01(\x05R\aclassID\x12\x16\n" +
@@ -3052,7 +3185,7 @@ func file_agent_agent_proto_rawDescGZIP() []byte {
 }
 
 var file_agent_agent_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_agent_agent_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
+var file_agent_agent_proto_msgTypes = make([]protoimpl.MessageInfo, 29)
 var file_agent_agent_proto_goTypes = []any{
 	(EffectTaskStatus)(0),                   // 0: oj.agent.EffectTaskStatus
 	(*SocraticAskReq)(nil),                  // 1: oj.agent.SocraticAskReq
@@ -3080,9 +3213,10 @@ var file_agent_agent_proto_goTypes = []any{
 	(*TeacherKnowledgeTrendItem)(nil),       // 23: oj.agent.TeacherKnowledgeTrendItem
 	(*QueryTeacherSessionDetailReq)(nil),    // 24: oj.agent.QueryTeacherSessionDetailReq
 	(*QueryTeacherSessionDetailRsp)(nil),    // 25: oj.agent.QueryTeacherSessionDetailRsp
-	(*QueryTeacherKnowledgeGapListReq)(nil), // 26: oj.agent.QueryTeacherKnowledgeGapListReq
-	(*QueryTeacherKnowledgeGapListRsp)(nil), // 27: oj.agent.QueryTeacherKnowledgeGapListRsp
-	(*TeacherKnowledgeGapItem)(nil),         // 28: oj.agent.TeacherKnowledgeGapItem
+	(*TeacherSessionEffectTask)(nil),        // 26: oj.agent.TeacherSessionEffectTask
+	(*QueryTeacherKnowledgeGapListReq)(nil), // 27: oj.agent.QueryTeacherKnowledgeGapListReq
+	(*QueryTeacherKnowledgeGapListRsp)(nil), // 28: oj.agent.QueryTeacherKnowledgeGapListRsp
+	(*TeacherKnowledgeGapItem)(nil),         // 29: oj.agent.TeacherKnowledgeGapItem
 }
 var file_agent_agent_proto_depIdxs = []int32{
 	10, // 0: oj.agent.SocraticAskRsp.session:type_name -> oj.agent.SocraticSession
@@ -3099,41 +3233,44 @@ var file_agent_agent_proto_depIdxs = []int32{
 	13, // 11: oj.agent.QueryKnowledgeGapListRsp.gaps:type_name -> oj.agent.SocraticKnowledgeGap
 	19, // 12: oj.agent.QueryTeacherDashboardRsp.summary:type_name -> oj.agent.TeacherDashboardSummary
 	0,  // 13: oj.agent.EffectTaskIssue.status:type_name -> oj.agent.EffectTaskStatus
-	28, // 14: oj.agent.TeacherDashboardSummary.topKnowledgeGaps:type_name -> oj.agent.TeacherKnowledgeGapItem
+	29, // 14: oj.agent.TeacherDashboardSummary.topKnowledgeGaps:type_name -> oj.agent.TeacherKnowledgeGapItem
 	22, // 15: oj.agent.TeacherDashboardSummary.recentSessions:type_name -> oj.agent.TeacherSessionItem
 	23, // 16: oj.agent.TeacherDashboardSummary.growthTrends:type_name -> oj.agent.TeacherKnowledgeTrendItem
 	18, // 17: oj.agent.TeacherDashboardSummary.effectTaskIssues:type_name -> oj.agent.EffectTaskIssue
 	22, // 18: oj.agent.QueryTeacherSessionListRsp.sessions:type_name -> oj.agent.TeacherSessionItem
 	10, // 19: oj.agent.TeacherSessionItem.session:type_name -> oj.agent.SocraticSession
-	10, // 20: oj.agent.QueryTeacherSessionDetailRsp.session:type_name -> oj.agent.SocraticSession
-	11, // 21: oj.agent.QueryTeacherSessionDetailRsp.messages:type_name -> oj.agent.SocraticMessage
-	28, // 22: oj.agent.QueryTeacherKnowledgeGapListRsp.items:type_name -> oj.agent.TeacherKnowledgeGapItem
-	13, // 23: oj.agent.TeacherKnowledgeGapItem.gap:type_name -> oj.agent.SocraticKnowledgeGap
-	1,  // 24: oj.agent.AgentServer.SocraticAsk:input_type -> oj.agent.SocraticAskReq
-	4,  // 25: oj.agent.AgentServer.QuerySocraticSession:input_type -> oj.agent.QuerySocraticSessionReq
-	6,  // 26: oj.agent.AgentServer.QuerySocraticHistory:input_type -> oj.agent.QuerySocraticHistoryReq
-	8,  // 27: oj.agent.AgentServer.EndSession:input_type -> oj.agent.EndSessionReq
-	1,  // 28: oj.agent.AgentServer.SocraticAskStream:input_type -> oj.agent.SocraticAskReq
-	14, // 29: oj.agent.AgentServer.QueryKnowledgeGapList:input_type -> oj.agent.QueryKnowledgeGapListReq
-	16, // 30: oj.agent.AgentServer.QueryTeacherDashboard:input_type -> oj.agent.QueryTeacherDashboardReq
-	20, // 31: oj.agent.AgentServer.QueryTeacherSessionList:input_type -> oj.agent.QueryTeacherSessionListReq
-	24, // 32: oj.agent.AgentServer.QueryTeacherSessionDetail:input_type -> oj.agent.QueryTeacherSessionDetailReq
-	26, // 33: oj.agent.AgentServer.QueryTeacherKnowledgeGapList:input_type -> oj.agent.QueryTeacherKnowledgeGapListReq
-	2,  // 34: oj.agent.AgentServer.SocraticAsk:output_type -> oj.agent.SocraticAskRsp
-	5,  // 35: oj.agent.AgentServer.QuerySocraticSession:output_type -> oj.agent.QuerySocraticSessionRsp
-	7,  // 36: oj.agent.AgentServer.QuerySocraticHistory:output_type -> oj.agent.QuerySocraticHistoryRsp
-	9,  // 37: oj.agent.AgentServer.EndSession:output_type -> oj.agent.EndSessionRsp
-	3,  // 38: oj.agent.AgentServer.SocraticAskStream:output_type -> oj.agent.SocraticAskChunk
-	15, // 39: oj.agent.AgentServer.QueryKnowledgeGapList:output_type -> oj.agent.QueryKnowledgeGapListRsp
-	17, // 40: oj.agent.AgentServer.QueryTeacherDashboard:output_type -> oj.agent.QueryTeacherDashboardRsp
-	21, // 41: oj.agent.AgentServer.QueryTeacherSessionList:output_type -> oj.agent.QueryTeacherSessionListRsp
-	25, // 42: oj.agent.AgentServer.QueryTeacherSessionDetail:output_type -> oj.agent.QueryTeacherSessionDetailRsp
-	27, // 43: oj.agent.AgentServer.QueryTeacherKnowledgeGapList:output_type -> oj.agent.QueryTeacherKnowledgeGapListRsp
-	34, // [34:44] is the sub-list for method output_type
-	24, // [24:34] is the sub-list for method input_type
-	24, // [24:24] is the sub-list for extension type_name
-	24, // [24:24] is the sub-list for extension extendee
-	0,  // [0:24] is the sub-list for field type_name
+	26, // 20: oj.agent.TeacherSessionItem.effectTask:type_name -> oj.agent.TeacherSessionEffectTask
+	10, // 21: oj.agent.QueryTeacherSessionDetailRsp.session:type_name -> oj.agent.SocraticSession
+	11, // 22: oj.agent.QueryTeacherSessionDetailRsp.messages:type_name -> oj.agent.SocraticMessage
+	26, // 23: oj.agent.QueryTeacherSessionDetailRsp.effectTask:type_name -> oj.agent.TeacherSessionEffectTask
+	0,  // 24: oj.agent.TeacherSessionEffectTask.status:type_name -> oj.agent.EffectTaskStatus
+	29, // 25: oj.agent.QueryTeacherKnowledgeGapListRsp.items:type_name -> oj.agent.TeacherKnowledgeGapItem
+	13, // 26: oj.agent.TeacherKnowledgeGapItem.gap:type_name -> oj.agent.SocraticKnowledgeGap
+	1,  // 27: oj.agent.AgentServer.SocraticAsk:input_type -> oj.agent.SocraticAskReq
+	4,  // 28: oj.agent.AgentServer.QuerySocraticSession:input_type -> oj.agent.QuerySocraticSessionReq
+	6,  // 29: oj.agent.AgentServer.QuerySocraticHistory:input_type -> oj.agent.QuerySocraticHistoryReq
+	8,  // 30: oj.agent.AgentServer.EndSession:input_type -> oj.agent.EndSessionReq
+	1,  // 31: oj.agent.AgentServer.SocraticAskStream:input_type -> oj.agent.SocraticAskReq
+	14, // 32: oj.agent.AgentServer.QueryKnowledgeGapList:input_type -> oj.agent.QueryKnowledgeGapListReq
+	16, // 33: oj.agent.AgentServer.QueryTeacherDashboard:input_type -> oj.agent.QueryTeacherDashboardReq
+	20, // 34: oj.agent.AgentServer.QueryTeacherSessionList:input_type -> oj.agent.QueryTeacherSessionListReq
+	24, // 35: oj.agent.AgentServer.QueryTeacherSessionDetail:input_type -> oj.agent.QueryTeacherSessionDetailReq
+	27, // 36: oj.agent.AgentServer.QueryTeacherKnowledgeGapList:input_type -> oj.agent.QueryTeacherKnowledgeGapListReq
+	2,  // 37: oj.agent.AgentServer.SocraticAsk:output_type -> oj.agent.SocraticAskRsp
+	5,  // 38: oj.agent.AgentServer.QuerySocraticSession:output_type -> oj.agent.QuerySocraticSessionRsp
+	7,  // 39: oj.agent.AgentServer.QuerySocraticHistory:output_type -> oj.agent.QuerySocraticHistoryRsp
+	9,  // 40: oj.agent.AgentServer.EndSession:output_type -> oj.agent.EndSessionRsp
+	3,  // 41: oj.agent.AgentServer.SocraticAskStream:output_type -> oj.agent.SocraticAskChunk
+	15, // 42: oj.agent.AgentServer.QueryKnowledgeGapList:output_type -> oj.agent.QueryKnowledgeGapListRsp
+	17, // 43: oj.agent.AgentServer.QueryTeacherDashboard:output_type -> oj.agent.QueryTeacherDashboardRsp
+	21, // 44: oj.agent.AgentServer.QueryTeacherSessionList:output_type -> oj.agent.QueryTeacherSessionListRsp
+	25, // 45: oj.agent.AgentServer.QueryTeacherSessionDetail:output_type -> oj.agent.QueryTeacherSessionDetailRsp
+	28, // 46: oj.agent.AgentServer.QueryTeacherKnowledgeGapList:output_type -> oj.agent.QueryTeacherKnowledgeGapListRsp
+	37, // [37:47] is the sub-list for method output_type
+	27, // [27:37] is the sub-list for method input_type
+	27, // [27:27] is the sub-list for extension type_name
+	27, // [27:27] is the sub-list for extension extendee
+	0,  // [0:27] is the sub-list for field type_name
 }
 
 func init() { file_agent_agent_proto_init() }
@@ -3147,7 +3284,7 @@ func file_agent_agent_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_agent_agent_proto_rawDesc), len(file_agent_agent_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   28,
+			NumMessages:   29,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

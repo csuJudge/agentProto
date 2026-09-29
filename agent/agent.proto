@@ -280,6 +280,7 @@ message TeacherSessionItem {
   bool effectiveGuidance = 9; // 本次引导是否达成有效教学效果
   int32 selfExplanationScore = 10; // 自我解释评分，0-3 分
   repeated int32 hintLevelTrace = 11; // Agent 回复的提示等级轨迹
+  TeacherSessionEffectTask effectTask = 12; // 当前会话的教学效果任务状态；进行中会话可为空
 }
 
 message TeacherKnowledgeTrendItem {
@@ -304,6 +305,18 @@ message QueryTeacherSessionDetailRsp {
   repeated SocraticMessage messages = 4; // 会话内消息
   int32 total = 5;    // 会话内消息总数
   bool hasMore = 6;   // 是否还有下一页
+  TeacherSessionEffectTask effectTask = 7; // 会话对应的教学效果任务状态；无任务时为空
+}
+
+message TeacherSessionEffectTask {
+  int64 taskID = 1;            // 任务自增编号
+  string sessionID = 2;        // 关联会话编号
+  int32 retryCount = 3;        // 已执行次数
+  EffectTaskStatus status = 4; // 任务状态
+  string lastError = 5;        // 最近一次失败原因
+  string availableTime = 6;    // 下次可执行时间；已完成或无任务为空
+  string createdTime = 7;      // 任务创建时间
+  string updatedTime = 8;      // 最近更新时间
 }
 
 message QueryTeacherKnowledgeGapListReq {
