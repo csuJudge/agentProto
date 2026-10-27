@@ -23,6 +23,7 @@ service AgentServer {
   rpc QueryKnowledgeGapList(QueryKnowledgeGapListReq) returns (QueryKnowledgeGapListRsp) {}
   // QueryStudentWeeklyReport 查询学生个人学习周报（只读）
   rpc QueryStudentWeeklyReport(QueryStudentWeeklyReportReq) returns (QueryStudentWeeklyReportRsp) {}
+  rpc QueryStudentWeeklyReportList(QueryStudentWeeklyReportListReq) returns (QueryStudentWeeklyReportListRsp) {}
   // QueryTeacherDashboard 查询教师端班级统计概览
   rpc QueryTeacherDashboard(QueryTeacherDashboardReq) returns (QueryTeacherDashboardRsp) {}
   // QueryTeacherSessionList 查询教师端会话列表
@@ -409,4 +410,26 @@ message StudentWeeklyReport {
   repeated StudentWeeklyConceptItem concepts = 6;
   string aiSummary = 7;
   bool aiSummaryAvailable = 8;
+  bool generated = 9;    // 该周是否已生成快照
+  string generatedTime = 10;  // 快照生成时间 yyyy-MM-dd HH:mm:ss
+}
+
+message QueryStudentWeeklyReportListReq {
+  int32 userID = 1;  // 学生编号
+  int32 limit = 2;   // 最多返回多少周，<=0 由服务端兜底
+}
+
+message QueryStudentWeeklyReportListRsp {
+  string message = 1;
+  int32 code = 2;
+  repeated StudentWeeklyReportItem reports = 3;
+}
+
+message StudentWeeklyReportItem {
+  string weekStart = 1;                  // 周起始日期（周一）yyyy-MM-dd
+  string weekEnd = 2;                    // 周结束日期（周日）yyyy-MM-dd
+  string generatedTime = 3;              // 快照生成时间 yyyy-MM-dd HH:mm:ss
+  StudentWeeklyOverview overview = 4;    // 该周概览
+  int32 weakPointCount = 5;              // 该周薄弱点条数
+  bool aiSummaryAvailable = 6;           // 该周是否已生成 AI 总结
 }

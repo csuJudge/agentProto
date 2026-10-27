@@ -3375,6 +3375,8 @@ type StudentWeeklyReport struct {
 	Concepts           []*StudentWeeklyConceptItem `protobuf:"bytes,6,rep,name=concepts,proto3" json:"concepts,omitempty"`
 	AiSummary          string                      `protobuf:"bytes,7,opt,name=aiSummary,proto3" json:"aiSummary,omitempty"`
 	AiSummaryAvailable bool                        `protobuf:"varint,8,opt,name=aiSummaryAvailable,proto3" json:"aiSummaryAvailable,omitempty"`
+	Generated          bool                        `protobuf:"varint,9,opt,name=generated,proto3" json:"generated,omitempty"`         // 该周是否已生成快照
+	GeneratedTime      string                      `protobuf:"bytes,10,opt,name=generatedTime,proto3" json:"generatedTime,omitempty"` // 快照生成时间 yyyy-MM-dd HH:mm:ss
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -3459,6 +3461,216 @@ func (x *StudentWeeklyReport) GetAiSummary() string {
 }
 
 func (x *StudentWeeklyReport) GetAiSummaryAvailable() bool {
+	if x != nil {
+		return x.AiSummaryAvailable
+	}
+	return false
+}
+
+func (x *StudentWeeklyReport) GetGenerated() bool {
+	if x != nil {
+		return x.Generated
+	}
+	return false
+}
+
+func (x *StudentWeeklyReport) GetGeneratedTime() string {
+	if x != nil {
+		return x.GeneratedTime
+	}
+	return ""
+}
+
+type QueryStudentWeeklyReportListReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserID        int32                  `protobuf:"varint,1,opt,name=userID,proto3" json:"userID,omitempty"` // 学生编号
+	Limit         int32                  `protobuf:"varint,2,opt,name=limit,proto3" json:"limit,omitempty"`   // 最多返回多少周，<=0 由服务端兜底
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryStudentWeeklyReportListReq) Reset() {
+	*x = QueryStudentWeeklyReportListReq{}
+	mi := &file_agent_agent_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryStudentWeeklyReportListReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryStudentWeeklyReportListReq) ProtoMessage() {}
+
+func (x *QueryStudentWeeklyReportListReq) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_agent_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryStudentWeeklyReportListReq.ProtoReflect.Descriptor instead.
+func (*QueryStudentWeeklyReportListReq) Descriptor() ([]byte, []int) {
+	return file_agent_agent_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *QueryStudentWeeklyReportListReq) GetUserID() int32 {
+	if x != nil {
+		return x.UserID
+	}
+	return 0
+}
+
+func (x *QueryStudentWeeklyReportListReq) GetLimit() int32 {
+	if x != nil {
+		return x.Limit
+	}
+	return 0
+}
+
+type QueryStudentWeeklyReportListRsp struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	Message       string                     `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
+	Code          int32                      `protobuf:"varint,2,opt,name=code,proto3" json:"code,omitempty"`
+	Reports       []*StudentWeeklyReportItem `protobuf:"bytes,3,rep,name=reports,proto3" json:"reports,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryStudentWeeklyReportListRsp) Reset() {
+	*x = QueryStudentWeeklyReportListRsp{}
+	mi := &file_agent_agent_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryStudentWeeklyReportListRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryStudentWeeklyReportListRsp) ProtoMessage() {}
+
+func (x *QueryStudentWeeklyReportListRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_agent_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryStudentWeeklyReportListRsp.ProtoReflect.Descriptor instead.
+func (*QueryStudentWeeklyReportListRsp) Descriptor() ([]byte, []int) {
+	return file_agent_agent_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *QueryStudentWeeklyReportListRsp) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
+}
+
+func (x *QueryStudentWeeklyReportListRsp) GetCode() int32 {
+	if x != nil {
+		return x.Code
+	}
+	return 0
+}
+
+func (x *QueryStudentWeeklyReportListRsp) GetReports() []*StudentWeeklyReportItem {
+	if x != nil {
+		return x.Reports
+	}
+	return nil
+}
+
+type StudentWeeklyReportItem struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	WeekStart          string                 `protobuf:"bytes,1,opt,name=weekStart,proto3" json:"weekStart,omitempty"`                    // 周起始日期（周一）yyyy-MM-dd
+	WeekEnd            string                 `protobuf:"bytes,2,opt,name=weekEnd,proto3" json:"weekEnd,omitempty"`                        // 周结束日期（周日）yyyy-MM-dd
+	GeneratedTime      string                 `protobuf:"bytes,3,opt,name=generatedTime,proto3" json:"generatedTime,omitempty"`            // 快照生成时间 yyyy-MM-dd HH:mm:ss
+	Overview           *StudentWeeklyOverview `protobuf:"bytes,4,opt,name=overview,proto3" json:"overview,omitempty"`                      // 该周概览
+	WeakPointCount     int32                  `protobuf:"varint,5,opt,name=weakPointCount,proto3" json:"weakPointCount,omitempty"`         // 该周薄弱点条数
+	AiSummaryAvailable bool                   `protobuf:"varint,6,opt,name=aiSummaryAvailable,proto3" json:"aiSummaryAvailable,omitempty"` // 该周是否已生成 AI 总结
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *StudentWeeklyReportItem) Reset() {
+	*x = StudentWeeklyReportItem{}
+	mi := &file_agent_agent_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *StudentWeeklyReportItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StudentWeeklyReportItem) ProtoMessage() {}
+
+func (x *StudentWeeklyReportItem) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_agent_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StudentWeeklyReportItem.ProtoReflect.Descriptor instead.
+func (*StudentWeeklyReportItem) Descriptor() ([]byte, []int) {
+	return file_agent_agent_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *StudentWeeklyReportItem) GetWeekStart() string {
+	if x != nil {
+		return x.WeekStart
+	}
+	return ""
+}
+
+func (x *StudentWeeklyReportItem) GetWeekEnd() string {
+	if x != nil {
+		return x.WeekEnd
+	}
+	return ""
+}
+
+func (x *StudentWeeklyReportItem) GetGeneratedTime() string {
+	if x != nil {
+		return x.GeneratedTime
+	}
+	return ""
+}
+
+func (x *StudentWeeklyReportItem) GetOverview() *StudentWeeklyOverview {
+	if x != nil {
+		return x.Overview
+	}
+	return nil
+}
+
+func (x *StudentWeeklyReportItem) GetWeakPointCount() int32 {
+	if x != nil {
+		return x.WeakPointCount
+	}
+	return 0
+}
+
+func (x *StudentWeeklyReportItem) GetAiSummaryAvailable() bool {
 	if x != nil {
 		return x.AiSummaryAvailable
 	}
@@ -3770,7 +3982,7 @@ const file_agent_agent_proto_rawDesc = "" +
 	"\x0foccurrenceCount\x18\x03 \x01(\x05R\x0foccurrenceCount\"h\n" +
 	"\x18StudentWeeklyConceptItem\x12$\n" +
 	"\rknowledgeName\x18\x01 \x01(\tR\rknowledgeName\x12&\n" +
-	"\x0ementionedCount\x18\x02 \x01(\x05R\x0ementionedCount\"\x9b\x03\n" +
+	"\x0ementionedCount\x18\x02 \x01(\x05R\x0ementionedCount\"\xdf\x03\n" +
 	"\x13StudentWeeklyReport\x12 \n" +
 	"\vperiodStart\x18\x01 \x01(\tR\vperiodStart\x12\x1c\n" +
 	"\tperiodEnd\x18\x02 \x01(\tR\tperiodEnd\x12;\n" +
@@ -3781,7 +3993,24 @@ const file_agent_agent_proto_rawDesc = "" +
 	"\x05trend\x18\x05 \x03(\v2!.oj.agent.StudentWeeklyTrendPointR\x05trend\x12>\n" +
 	"\bconcepts\x18\x06 \x03(\v2\".oj.agent.StudentWeeklyConceptItemR\bconcepts\x12\x1c\n" +
 	"\taiSummary\x18\a \x01(\tR\taiSummary\x12.\n" +
-	"\x12aiSummaryAvailable\x18\b \x01(\bR\x12aiSummaryAvailable*\xbc\x01\n" +
+	"\x12aiSummaryAvailable\x18\b \x01(\bR\x12aiSummaryAvailable\x12\x1c\n" +
+	"\tgenerated\x18\t \x01(\bR\tgenerated\x12$\n" +
+	"\rgeneratedTime\x18\n" +
+	" \x01(\tR\rgeneratedTime\"O\n" +
+	"\x1fQueryStudentWeeklyReportListReq\x12\x16\n" +
+	"\x06userID\x18\x01 \x01(\x05R\x06userID\x12\x14\n" +
+	"\x05limit\x18\x02 \x01(\x05R\x05limit\"\x8c\x01\n" +
+	"\x1fQueryStudentWeeklyReportListRsp\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\x12\x12\n" +
+	"\x04code\x18\x02 \x01(\x05R\x04code\x12;\n" +
+	"\areports\x18\x03 \x03(\v2!.oj.agent.StudentWeeklyReportItemR\areports\"\x8c\x02\n" +
+	"\x17StudentWeeklyReportItem\x12\x1c\n" +
+	"\tweekStart\x18\x01 \x01(\tR\tweekStart\x12\x18\n" +
+	"\aweekEnd\x18\x02 \x01(\tR\aweekEnd\x12$\n" +
+	"\rgeneratedTime\x18\x03 \x01(\tR\rgeneratedTime\x12;\n" +
+	"\boverview\x18\x04 \x01(\v2\x1f.oj.agent.StudentWeeklyOverviewR\boverview\x12&\n" +
+	"\x0eweakPointCount\x18\x05 \x01(\x05R\x0eweakPointCount\x12.\n" +
+	"\x12aiSummaryAvailable\x18\x06 \x01(\bR\x12aiSummaryAvailable*\xbc\x01\n" +
 	"\x10EffectTaskStatus\x12\"\n" +
 	"\x1eEFFECT_TASK_STATUS_UNSPECIFIED\x10\x00\x12\x1e\n" +
 	"\x1aEFFECT_TASK_STATUS_PENDING\x10\x01\x12\x1e\n" +
@@ -3792,7 +4021,7 @@ const file_agent_agent_proto_rawDesc = "" +
 	"\x19STUDENT_TREND_UNSPECIFIED\x10\x00\x12\x14\n" +
 	"\x10STUDENT_TREND_UP\x10\x01\x12\x16\n" +
 	"\x12STUDENT_TREND_FLAT\x10\x02\x12\x16\n" +
-	"\x12STUDENT_TREND_DOWN\x10\x032\xa5\b\n" +
+	"\x12STUDENT_TREND_DOWN\x10\x032\x9d\t\n" +
 	"\vAgentServer\x12C\n" +
 	"\vSocraticAsk\x12\x18.oj.agent.SocraticAskReq\x1a\x18.oj.agent.SocraticAskRsp\"\x00\x12^\n" +
 	"\x14QuerySocraticSession\x12!.oj.agent.QuerySocraticSessionReq\x1a!.oj.agent.QuerySocraticSessionRsp\"\x00\x12^\n" +
@@ -3801,7 +4030,8 @@ const file_agent_agent_proto_rawDesc = "" +
 	"EndSession\x12\x17.oj.agent.EndSessionReq\x1a\x17.oj.agent.EndSessionRsp\"\x00\x12M\n" +
 	"\x11SocraticAskStream\x12\x18.oj.agent.SocraticAskReq\x1a\x1a.oj.agent.SocraticAskChunk\"\x000\x01\x12a\n" +
 	"\x15QueryKnowledgeGapList\x12\".oj.agent.QueryKnowledgeGapListReq\x1a\".oj.agent.QueryKnowledgeGapListRsp\"\x00\x12j\n" +
-	"\x18QueryStudentWeeklyReport\x12%.oj.agent.QueryStudentWeeklyReportReq\x1a%.oj.agent.QueryStudentWeeklyReportRsp\"\x00\x12a\n" +
+	"\x18QueryStudentWeeklyReport\x12%.oj.agent.QueryStudentWeeklyReportReq\x1a%.oj.agent.QueryStudentWeeklyReportRsp\"\x00\x12v\n" +
+	"\x1cQueryStudentWeeklyReportList\x12).oj.agent.QueryStudentWeeklyReportListReq\x1a).oj.agent.QueryStudentWeeklyReportListRsp\"\x00\x12a\n" +
 	"\x15QueryTeacherDashboard\x12\".oj.agent.QueryTeacherDashboardReq\x1a\".oj.agent.QueryTeacherDashboardRsp\"\x00\x12g\n" +
 	"\x17QueryTeacherSessionList\x12$.oj.agent.QueryTeacherSessionListReq\x1a$.oj.agent.QueryTeacherSessionListRsp\"\x00\x12m\n" +
 	"\x19QueryTeacherSessionDetail\x12&.oj.agent.QueryTeacherSessionDetailReq\x1a&.oj.agent.QueryTeacherSessionDetailRsp\"\x00\x12v\n" +
@@ -3820,7 +4050,7 @@ func file_agent_agent_proto_rawDescGZIP() []byte {
 }
 
 var file_agent_agent_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_agent_agent_proto_msgTypes = make([]protoimpl.MessageInfo, 36)
+var file_agent_agent_proto_msgTypes = make([]protoimpl.MessageInfo, 39)
 var file_agent_agent_proto_goTypes = []any{
 	(EffectTaskStatus)(0),                   // 0: oj.agent.EffectTaskStatus
 	(StudentTrendDirection)(0),              // 1: oj.agent.StudentTrendDirection
@@ -3860,6 +4090,9 @@ var file_agent_agent_proto_goTypes = []any{
 	(*StudentWeeklyTrendPoint)(nil),         // 35: oj.agent.StudentWeeklyTrendPoint
 	(*StudentWeeklyConceptItem)(nil),        // 36: oj.agent.StudentWeeklyConceptItem
 	(*StudentWeeklyReport)(nil),             // 37: oj.agent.StudentWeeklyReport
+	(*QueryStudentWeeklyReportListReq)(nil), // 38: oj.agent.QueryStudentWeeklyReportListReq
+	(*QueryStudentWeeklyReportListRsp)(nil), // 39: oj.agent.QueryStudentWeeklyReportListRsp
+	(*StudentWeeklyReportItem)(nil),         // 40: oj.agent.StudentWeeklyReportItem
 }
 var file_agent_agent_proto_depIdxs = []int32{
 	11, // 0: oj.agent.SocraticAskRsp.session:type_name -> oj.agent.SocraticSession
@@ -3895,33 +4128,37 @@ var file_agent_agent_proto_depIdxs = []int32{
 	34, // 30: oj.agent.StudentWeeklyReport.weakPoints:type_name -> oj.agent.StudentWeeklyWeakPoint
 	35, // 31: oj.agent.StudentWeeklyReport.trend:type_name -> oj.agent.StudentWeeklyTrendPoint
 	36, // 32: oj.agent.StudentWeeklyReport.concepts:type_name -> oj.agent.StudentWeeklyConceptItem
-	2,  // 33: oj.agent.AgentServer.SocraticAsk:input_type -> oj.agent.SocraticAskReq
-	5,  // 34: oj.agent.AgentServer.QuerySocraticSession:input_type -> oj.agent.QuerySocraticSessionReq
-	7,  // 35: oj.agent.AgentServer.QuerySocraticHistory:input_type -> oj.agent.QuerySocraticHistoryReq
-	9,  // 36: oj.agent.AgentServer.EndSession:input_type -> oj.agent.EndSessionReq
-	2,  // 37: oj.agent.AgentServer.SocraticAskStream:input_type -> oj.agent.SocraticAskReq
-	15, // 38: oj.agent.AgentServer.QueryKnowledgeGapList:input_type -> oj.agent.QueryKnowledgeGapListReq
-	31, // 39: oj.agent.AgentServer.QueryStudentWeeklyReport:input_type -> oj.agent.QueryStudentWeeklyReportReq
-	17, // 40: oj.agent.AgentServer.QueryTeacherDashboard:input_type -> oj.agent.QueryTeacherDashboardReq
-	21, // 41: oj.agent.AgentServer.QueryTeacherSessionList:input_type -> oj.agent.QueryTeacherSessionListReq
-	25, // 42: oj.agent.AgentServer.QueryTeacherSessionDetail:input_type -> oj.agent.QueryTeacherSessionDetailReq
-	28, // 43: oj.agent.AgentServer.QueryTeacherKnowledgeGapList:input_type -> oj.agent.QueryTeacherKnowledgeGapListReq
-	3,  // 44: oj.agent.AgentServer.SocraticAsk:output_type -> oj.agent.SocraticAskRsp
-	6,  // 45: oj.agent.AgentServer.QuerySocraticSession:output_type -> oj.agent.QuerySocraticSessionRsp
-	8,  // 46: oj.agent.AgentServer.QuerySocraticHistory:output_type -> oj.agent.QuerySocraticHistoryRsp
-	10, // 47: oj.agent.AgentServer.EndSession:output_type -> oj.agent.EndSessionRsp
-	4,  // 48: oj.agent.AgentServer.SocraticAskStream:output_type -> oj.agent.SocraticAskChunk
-	16, // 49: oj.agent.AgentServer.QueryKnowledgeGapList:output_type -> oj.agent.QueryKnowledgeGapListRsp
-	32, // 50: oj.agent.AgentServer.QueryStudentWeeklyReport:output_type -> oj.agent.QueryStudentWeeklyReportRsp
-	18, // 51: oj.agent.AgentServer.QueryTeacherDashboard:output_type -> oj.agent.QueryTeacherDashboardRsp
-	22, // 52: oj.agent.AgentServer.QueryTeacherSessionList:output_type -> oj.agent.QueryTeacherSessionListRsp
-	26, // 53: oj.agent.AgentServer.QueryTeacherSessionDetail:output_type -> oj.agent.QueryTeacherSessionDetailRsp
-	29, // 54: oj.agent.AgentServer.QueryTeacherKnowledgeGapList:output_type -> oj.agent.QueryTeacherKnowledgeGapListRsp
-	44, // [44:55] is the sub-list for method output_type
-	33, // [33:44] is the sub-list for method input_type
-	33, // [33:33] is the sub-list for extension type_name
-	33, // [33:33] is the sub-list for extension extendee
-	0,  // [0:33] is the sub-list for field type_name
+	40, // 33: oj.agent.QueryStudentWeeklyReportListRsp.reports:type_name -> oj.agent.StudentWeeklyReportItem
+	33, // 34: oj.agent.StudentWeeklyReportItem.overview:type_name -> oj.agent.StudentWeeklyOverview
+	2,  // 35: oj.agent.AgentServer.SocraticAsk:input_type -> oj.agent.SocraticAskReq
+	5,  // 36: oj.agent.AgentServer.QuerySocraticSession:input_type -> oj.agent.QuerySocraticSessionReq
+	7,  // 37: oj.agent.AgentServer.QuerySocraticHistory:input_type -> oj.agent.QuerySocraticHistoryReq
+	9,  // 38: oj.agent.AgentServer.EndSession:input_type -> oj.agent.EndSessionReq
+	2,  // 39: oj.agent.AgentServer.SocraticAskStream:input_type -> oj.agent.SocraticAskReq
+	15, // 40: oj.agent.AgentServer.QueryKnowledgeGapList:input_type -> oj.agent.QueryKnowledgeGapListReq
+	31, // 41: oj.agent.AgentServer.QueryStudentWeeklyReport:input_type -> oj.agent.QueryStudentWeeklyReportReq
+	38, // 42: oj.agent.AgentServer.QueryStudentWeeklyReportList:input_type -> oj.agent.QueryStudentWeeklyReportListReq
+	17, // 43: oj.agent.AgentServer.QueryTeacherDashboard:input_type -> oj.agent.QueryTeacherDashboardReq
+	21, // 44: oj.agent.AgentServer.QueryTeacherSessionList:input_type -> oj.agent.QueryTeacherSessionListReq
+	25, // 45: oj.agent.AgentServer.QueryTeacherSessionDetail:input_type -> oj.agent.QueryTeacherSessionDetailReq
+	28, // 46: oj.agent.AgentServer.QueryTeacherKnowledgeGapList:input_type -> oj.agent.QueryTeacherKnowledgeGapListReq
+	3,  // 47: oj.agent.AgentServer.SocraticAsk:output_type -> oj.agent.SocraticAskRsp
+	6,  // 48: oj.agent.AgentServer.QuerySocraticSession:output_type -> oj.agent.QuerySocraticSessionRsp
+	8,  // 49: oj.agent.AgentServer.QuerySocraticHistory:output_type -> oj.agent.QuerySocraticHistoryRsp
+	10, // 50: oj.agent.AgentServer.EndSession:output_type -> oj.agent.EndSessionRsp
+	4,  // 51: oj.agent.AgentServer.SocraticAskStream:output_type -> oj.agent.SocraticAskChunk
+	16, // 52: oj.agent.AgentServer.QueryKnowledgeGapList:output_type -> oj.agent.QueryKnowledgeGapListRsp
+	32, // 53: oj.agent.AgentServer.QueryStudentWeeklyReport:output_type -> oj.agent.QueryStudentWeeklyReportRsp
+	39, // 54: oj.agent.AgentServer.QueryStudentWeeklyReportList:output_type -> oj.agent.QueryStudentWeeklyReportListRsp
+	18, // 55: oj.agent.AgentServer.QueryTeacherDashboard:output_type -> oj.agent.QueryTeacherDashboardRsp
+	22, // 56: oj.agent.AgentServer.QueryTeacherSessionList:output_type -> oj.agent.QueryTeacherSessionListRsp
+	26, // 57: oj.agent.AgentServer.QueryTeacherSessionDetail:output_type -> oj.agent.QueryTeacherSessionDetailRsp
+	29, // 58: oj.agent.AgentServer.QueryTeacherKnowledgeGapList:output_type -> oj.agent.QueryTeacherKnowledgeGapListRsp
+	47, // [47:59] is the sub-list for method output_type
+	35, // [35:47] is the sub-list for method input_type
+	35, // [35:35] is the sub-list for extension type_name
+	35, // [35:35] is the sub-list for extension extendee
+	0,  // [0:35] is the sub-list for field type_name
 }
 
 func init() { file_agent_agent_proto_init() }
@@ -3935,7 +4172,7 @@ func file_agent_agent_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_agent_agent_proto_rawDesc), len(file_agent_agent_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   36,
+			NumMessages:   39,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

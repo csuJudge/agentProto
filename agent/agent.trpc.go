@@ -37,6 +37,8 @@ type AgentServerService interface {
 	QueryKnowledgeGapList(ctx context.Context, req *QueryKnowledgeGapListReq) (*QueryKnowledgeGapListRsp, error)
 	// QueryStudentWeeklyReport QueryStudentWeeklyReport 查询学生个人学习周报（只读）
 	QueryStudentWeeklyReport(ctx context.Context, req *QueryStudentWeeklyReportReq) (*QueryStudentWeeklyReportRsp, error)
+
+	QueryStudentWeeklyReportList(ctx context.Context, req *QueryStudentWeeklyReportListReq) (*QueryStudentWeeklyReportListRsp, error)
 	// QueryTeacherDashboard QueryTeacherDashboard 查询教师端班级统计概览
 	QueryTeacherDashboard(ctx context.Context, req *QueryTeacherDashboardReq) (*QueryTeacherDashboardRsp, error)
 	// QueryTeacherSessionList QueryTeacherSessionList 查询教师端会话列表
@@ -176,6 +178,24 @@ func AgentServerService_QueryStudentWeeklyReport_Handler(svr interface{}, ctx co
 	return rsp, nil
 }
 
+func AgentServerService_QueryStudentWeeklyReportList_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
+	req := &QueryStudentWeeklyReportListReq{}
+	filters, err := f(req)
+	if err != nil {
+		return nil, err
+	}
+	handleFunc := func(ctx context.Context, reqbody interface{}) (interface{}, error) {
+		return svr.(AgentServerService).QueryStudentWeeklyReportList(ctx, reqbody.(*QueryStudentWeeklyReportListReq))
+	}
+
+	var rsp interface{}
+	rsp, err = filters.Filter(ctx, req, handleFunc)
+	if err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
 func AgentServerService_QueryTeacherDashboard_Handler(svr interface{}, ctx context.Context, f server.FilterFunc) (interface{}, error) {
 	req := &QueryTeacherDashboardReq{}
 	filters, err := f(req)
@@ -279,6 +299,10 @@ var AgentServerServer_ServiceDesc = server.ServiceDesc{
 			Func: AgentServerService_QueryStudentWeeklyReport_Handler,
 		},
 		{
+			Name: "/oj.agent.AgentServer/QueryStudentWeeklyReportList",
+			Func: AgentServerService_QueryStudentWeeklyReportList_Handler,
+		},
+		{
 			Name: "/oj.agent.AgentServer/QueryTeacherDashboard",
 			Func: AgentServerService_QueryTeacherDashboard_Handler,
 		},
@@ -355,6 +379,9 @@ func (s *UnimplementedAgentServer) QueryKnowledgeGapList(ctx context.Context, re
 func (s *UnimplementedAgentServer) QueryStudentWeeklyReport(ctx context.Context, req *QueryStudentWeeklyReportReq) (*QueryStudentWeeklyReportRsp, error) {
 	return nil, errors.New("rpc QueryStudentWeeklyReport of service AgentServer is not implemented")
 }
+func (s *UnimplementedAgentServer) QueryStudentWeeklyReportList(ctx context.Context, req *QueryStudentWeeklyReportListReq) (*QueryStudentWeeklyReportListRsp, error) {
+	return nil, errors.New("rpc QueryStudentWeeklyReportList of service AgentServer is not implemented")
+}
 
 // QueryTeacherDashboard QueryTeacherDashboard 查询教师端班级统计概览
 func (s *UnimplementedAgentServer) QueryTeacherDashboard(ctx context.Context, req *QueryTeacherDashboardReq) (*QueryTeacherDashboardRsp, error) {
@@ -401,6 +428,8 @@ type AgentServerClientProxy interface {
 	QueryKnowledgeGapList(ctx context.Context, req *QueryKnowledgeGapListReq, opts ...client.Option) (rsp *QueryKnowledgeGapListRsp, err error)
 	// QueryStudentWeeklyReport QueryStudentWeeklyReport 查询学生个人学习周报（只读）
 	QueryStudentWeeklyReport(ctx context.Context, req *QueryStudentWeeklyReportReq, opts ...client.Option) (rsp *QueryStudentWeeklyReportRsp, err error)
+
+	QueryStudentWeeklyReportList(ctx context.Context, req *QueryStudentWeeklyReportListReq, opts ...client.Option) (rsp *QueryStudentWeeklyReportListRsp, err error)
 	// QueryTeacherDashboard QueryTeacherDashboard 查询教师端班级统计概览
 	QueryTeacherDashboard(ctx context.Context, req *QueryTeacherDashboardReq, opts ...client.Option) (rsp *QueryTeacherDashboardRsp, err error)
 	// QueryTeacherSessionList QueryTeacherSessionList 查询教师端会话列表
@@ -586,6 +615,26 @@ func (c *AgentServerClientProxyImpl) QueryStudentWeeklyReport(ctx context.Contex
 	callopts = append(callopts, c.opts...)
 	callopts = append(callopts, opts...)
 	rsp := &QueryStudentWeeklyReportRsp{}
+	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
+		return nil, err
+	}
+	return rsp, nil
+}
+
+func (c *AgentServerClientProxyImpl) QueryStudentWeeklyReportList(ctx context.Context, req *QueryStudentWeeklyReportListReq, opts ...client.Option) (*QueryStudentWeeklyReportListRsp, error) {
+	ctx, msg := codec.WithCloneMessage(ctx)
+	defer codec.PutBackMessage(msg)
+	msg.WithClientRPCName("/oj.agent.AgentServer/QueryStudentWeeklyReportList")
+	msg.WithCalleeServiceName(AgentServerServer_ServiceDesc.ServiceName)
+	msg.WithCalleeApp("")
+	msg.WithCalleeServer("")
+	msg.WithCalleeService("AgentServer")
+	msg.WithCalleeMethod("QueryStudentWeeklyReportList")
+	msg.WithSerializationType(codec.SerializationTypePB)
+	callopts := make([]client.Option, 0, len(c.opts)+len(opts))
+	callopts = append(callopts, c.opts...)
+	callopts = append(callopts, opts...)
+	rsp := &QueryStudentWeeklyReportListRsp{}
 	if err := c.client.Invoke(ctx, req, rsp, callopts...); err != nil {
 		return nil, err
 	}
