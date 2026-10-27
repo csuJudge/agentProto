@@ -105,6 +105,21 @@ func (mr *MockAgentServerServiceMockRecorder) QuerySocraticSession(ctx, req any)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QuerySocraticSession", reflect.TypeOf((*MockAgentServerService)(nil).QuerySocraticSession), ctx, req)
 }
 
+// QueryStudentWeeklyReport mocks base method.
+func (m *MockAgentServerService) QueryStudentWeeklyReport(ctx context.Context, req *QueryStudentWeeklyReportReq) (*QueryStudentWeeklyReportRsp, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "QueryStudentWeeklyReport", ctx, req)
+	ret0, _ := ret[0].(*QueryStudentWeeklyReportRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// QueryStudentWeeklyReport indicates an expected call of QueryStudentWeeklyReport.
+func (mr *MockAgentServerServiceMockRecorder) QueryStudentWeeklyReport(ctx, req any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryStudentWeeklyReport", reflect.TypeOf((*MockAgentServerService)(nil).QueryStudentWeeklyReport), ctx, req)
+}
+
 // QueryTeacherDashboard mocks base method.
 func (m *MockAgentServerService) QueryTeacherDashboard(ctx context.Context, req *QueryTeacherDashboardReq) (*QueryTeacherDashboardRsp, error) {
 	m.ctrl.T.Helper()
@@ -384,6 +399,26 @@ func (mr *MockAgentServerClientProxyMockRecorder) QuerySocraticSession(ctx, req 
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]any{ctx, req}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QuerySocraticSession", reflect.TypeOf((*MockAgentServerClientProxy)(nil).QuerySocraticSession), varargs...)
+}
+
+// QueryStudentWeeklyReport mocks base method.
+func (m *MockAgentServerClientProxy) QueryStudentWeeklyReport(ctx context.Context, req *QueryStudentWeeklyReportReq, opts ...client.Option) (*QueryStudentWeeklyReportRsp, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, req}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "QueryStudentWeeklyReport", varargs...)
+	ret0, _ := ret[0].(*QueryStudentWeeklyReportRsp)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// QueryStudentWeeklyReport indicates an expected call of QueryStudentWeeklyReport.
+func (mr *MockAgentServerClientProxyMockRecorder) QueryStudentWeeklyReport(ctx, req any, opts ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, req}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "QueryStudentWeeklyReport", reflect.TypeOf((*MockAgentServerClientProxy)(nil).QueryStudentWeeklyReport), varargs...)
 }
 
 // QueryTeacherDashboard mocks base method.

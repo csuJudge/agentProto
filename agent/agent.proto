@@ -21,6 +21,8 @@ service AgentServer {
   // ---------- P2：学生画像与教师端 ----------
   // QueryKnowledgeGapList 查询学生自己的知识薄弱点
   rpc QueryKnowledgeGapList(QueryKnowledgeGapListReq) returns (QueryKnowledgeGapListRsp) {}
+  // QueryStudentWeeklyReport 查询学生个人学习周报（只读）
+  rpc QueryStudentWeeklyReport(QueryStudentWeeklyReportReq) returns (QueryStudentWeeklyReportRsp) {}
   // QueryTeacherDashboard 查询教师端班级统计概览
   rpc QueryTeacherDashboard(QueryTeacherDashboardReq) returns (QueryTeacherDashboardRsp) {}
   // QueryTeacherSessionList 查询教师端会话列表
@@ -344,4 +346,67 @@ message TeacherKnowledgeGapItem {
   string studentName = 2;       // 学生姓名
   string studentNumber = 3;     // 学生学号
   string problemName = 4;       // 题目名称
+}
+
+message QueryStudentWeeklyReportReq {
+  int32 userID = 1;          // 学生 ID；0 表示使用登录态中的用户
+  string startDate = 2;      // 起始日期 YYYY-MM-DD，空表示最近 7 天
+  string endDate = 3;        // 结束日期 YYYY-MM-DD，空表示今天
+  bool includeAISummary = 4; // 是否请求 LLM 摘要；服务端开关关闭时忽略
+}
+
+message QueryStudentWeeklyReportRsp {
+  string message = 1;
+  int32 code = 2;
+  StudentWeeklyReport report = 3;
+}
+
+enum StudentTrendDirection {
+  STUDENT_TREND_UNSPECIFIED = 0;
+  STUDENT_TREND_UP = 1;   // 后半段出现次数上升，薄弱点在恶化
+  STUDENT_TREND_FLAT = 2; // 前后半段持平
+  STUDENT_TREND_DOWN = 3; // 下降，已在改善
+}
+
+message StudentWeeklyOverview {
+  int32 sessionCount = 1;
+  int32 problemCount = 2;
+  int32 evaluatedSessionCount = 3;
+  double finalACRate = 4;
+  double effectiveGuidanceRate = 5;
+  double averageTurnCount = 6;
+  double averageSelfExplanationScore = 7;
+  int32 improvedGapCount = 8; // 趋势下降的薄弱点数
+  int32 worsenedGapCount = 9; // 趋势上升的薄弱点数
+}
+
+message StudentWeeklyWeakPoint {
+  int32 knowledgeID = 1;
+  string knowledgeName = 2;
+  int32 periodOccurrenceCount = 3; // 周期内出现次数
+  int32 totalFrequency = 4;        // socratic_knowledge_gap 累计频次
+  StudentTrendDirection direction = 5;
+  int32 relatedProblemCount = 6;   // 周期内关联题目数
+}
+
+message StudentWeeklyTrendPoint {
+  string statDate = 1;      // YYYY-MM-DD
+  string knowledgeName = 2;
+  int32 occurrenceCount = 3;
+}
+
+message StudentWeeklyConceptItem {
+  string knowledgeName = 1;
+  int32 mentionedCount = 2;
+}
+
+message StudentWeeklyReport {
+  string periodStart = 1;
+  string periodEnd = 2;
+  StudentWeeklyOverview overview = 3;
+  repeated StudentWeeklyWeakPoint weakPoints = 4;
+  repeated StudentWeeklyTrendPoint trend = 5;
+  repeated StudentWeeklyConceptItem concepts = 6;
+  string aiSummary = 7;
+  bool aiSummaryAvailable = 8;
 }
