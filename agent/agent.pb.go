@@ -7,12 +7,11 @@
 package agent
 
 import (
+	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
+	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
-
-	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
-	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 )
 
 const (
@@ -3072,6 +3071,9 @@ type StudentWeeklyOverview struct {
 	AverageSelfExplanationScore float64                `protobuf:"fixed64,7,opt,name=averageSelfExplanationScore,proto3" json:"averageSelfExplanationScore,omitempty"`
 	ImprovedGapCount            int32                  `protobuf:"varint,8,opt,name=improvedGapCount,proto3" json:"improvedGapCount,omitempty"` // 趋势下降的薄弱点数
 	WorsenedGapCount            int32                  `protobuf:"varint,9,opt,name=worsenedGapCount,proto3" json:"worsenedGapCount,omitempty"` // 趋势上升的薄弱点数
+	SubmissionCount             int32                  `protobuf:"varint,10,opt,name=submissionCount,proto3" json:"submissionCount,omitempty"`  // 周期内 OJ 有效提交数（solution 表，排除测试提交）
+	AcCount                     int32                  `protobuf:"varint,11,opt,name=acCount,proto3" json:"acCount,omitempty"`                  // 其中判题通过（result=0）的次数
+	AcRate                      float64                `protobuf:"fixed64,12,opt,name=acRate,proto3" json:"acRate,omitempty"`                   // 周期提交 AC 率 = acCount/submissionCount，无提交为 0
 	unknownFields               protoimpl.UnknownFields
 	sizeCache                   protoimpl.SizeCache
 }
@@ -3165,6 +3167,27 @@ func (x *StudentWeeklyOverview) GetImprovedGapCount() int32 {
 func (x *StudentWeeklyOverview) GetWorsenedGapCount() int32 {
 	if x != nil {
 		return x.WorsenedGapCount
+	}
+	return 0
+}
+
+func (x *StudentWeeklyOverview) GetSubmissionCount() int32 {
+	if x != nil {
+		return x.SubmissionCount
+	}
+	return 0
+}
+
+func (x *StudentWeeklyOverview) GetAcCount() int32 {
+	if x != nil {
+		return x.AcCount
+	}
+	return 0
+}
+
+func (x *StudentWeeklyOverview) GetAcRate() float64 {
+	if x != nil {
+		return x.AcRate
 	}
 	return 0
 }
@@ -3958,7 +3981,7 @@ const file_agent_agent_proto_rawDesc = "" +
 	"\x1bQueryStudentWeeklyReportRsp\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\x12\x12\n" +
 	"\x04code\x18\x02 \x01(\x05R\x04code\x125\n" +
-	"\x06report\x18\x03 \x01(\v2\x1d.oj.agent.StudentWeeklyReportR\x06report\"\xb3\x03\n" +
+	"\x06report\x18\x03 \x01(\v2\x1d.oj.agent.StudentWeeklyReportR\x06report\"\x8f\x04\n" +
 	"\x15StudentWeeklyOverview\x12\"\n" +
 	"\fsessionCount\x18\x01 \x01(\x05R\fsessionCount\x12\"\n" +
 	"\fproblemCount\x18\x02 \x01(\x05R\fproblemCount\x124\n" +
@@ -3968,7 +3991,11 @@ const file_agent_agent_proto_rawDesc = "" +
 	"\x10averageTurnCount\x18\x06 \x01(\x01R\x10averageTurnCount\x12@\n" +
 	"\x1baverageSelfExplanationScore\x18\a \x01(\x01R\x1baverageSelfExplanationScore\x12*\n" +
 	"\x10improvedGapCount\x18\b \x01(\x05R\x10improvedGapCount\x12*\n" +
-	"\x10worsenedGapCount\x18\t \x01(\x05R\x10worsenedGapCount\"\xaf\x02\n" +
+	"\x10worsenedGapCount\x18\t \x01(\x05R\x10worsenedGapCount\x12(\n" +
+	"\x0fsubmissionCount\x18\n" +
+	" \x01(\x05R\x0fsubmissionCount\x12\x18\n" +
+	"\aacCount\x18\v \x01(\x05R\aacCount\x12\x16\n" +
+	"\x06acRate\x18\f \x01(\x01R\x06acRate\"\xaf\x02\n" +
 	"\x16StudentWeeklyWeakPoint\x12 \n" +
 	"\vknowledgeID\x18\x01 \x01(\x05R\vknowledgeID\x12$\n" +
 	"\rknowledgeName\x18\x02 \x01(\tR\rknowledgeName\x124\n" +

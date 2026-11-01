@@ -379,6 +379,9 @@ message StudentWeeklyOverview {
   double averageSelfExplanationScore = 7;
   int32 improvedGapCount = 8; // 趋势下降的薄弱点数
   int32 worsenedGapCount = 9; // 趋势上升的薄弱点数
+  int32 submissionCount = 10; // 周期内 OJ 有效提交数（solution 表，排除测试提交）
+  int32 acCount = 11;         // 其中判题通过（result=0）的次数
+  double acRate = 12;         // 周期提交 AC 率 = acCount/submissionCount，无提交为 0
 }
 
 message StudentWeeklyWeakPoint {
